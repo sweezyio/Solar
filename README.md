@@ -1,4 +1,4 @@
-# SolarScript
+# Solar
 A lisp-style programming language written in python.
 
 Eg.
