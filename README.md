@@ -1,4 +1,4 @@
-# PL
+# SolarScript
 A lisp-style programming language written in python.
 
 Eg.
@@ -22,7 +22,6 @@ x = (int (input "FizzBuzz Enter an Integer > "))
 ```
 Note: This is a first idea, so the final result could look quite different.
 
-Please help with naming in [The Naming Issue](https://github.com/simplebinary/PL/issues/1)
 
 - SimpleBinary
 Owner of this repository
