@@ -24,7 +24,7 @@ Note: This is a first idea, so the final result could look quite different.
 
 
 ### SimpleBinary
-﻿ ﻿ ﻿ ﻿ Owner of this orginisation
+&#32;&#32;&#32;&#32;Owner of this orginisation
 
    
 
