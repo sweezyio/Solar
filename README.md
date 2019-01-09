@@ -2,6 +2,7 @@
 A lisp-style programming language written in python.
 
 Eg.
+
 |Lisp-Style                    |C-style       |
 |------------------------------|--------------|
 |`(print "Hello, World!")`     |`print("Hello, World!")`|
