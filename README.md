@@ -23,8 +23,8 @@ x = (int (input "FizzBuzz Enter an Integer > "))
 Note: This is a first idea, so the final result could look quite different.
 
 
-SimpleBinary
-:  Owner of this orginisation
+### SimpleBinary
+  Owner of this orginisation
 
    
 
