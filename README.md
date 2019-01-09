@@ -7,7 +7,7 @@ Eg.
 |------------------------------|--------------|
 |`(print "Hello, World!")`     |`print("Hello, World!")`|
 
-## FizzBuzz in PL
+## FizzBuzz in Solar
 ```
 x = (int (input "FizzBuzz Enter an Integer > "))
 (for y = 1; y <= x; ++y) {
@@ -24,6 +24,6 @@ Note: This is a first idea, so the final result could look quite different.
 
 
 - SimpleBinary
-Owner of this repository
+Owner of this orginisation
    
 
