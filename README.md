@@ -1,3 +1,4 @@
+![Solar-logo](https://github.com/Solar-language/Solar/blob/master/media/Solar-Logo.png?raw=true)
 # Solar
 A lisp-style programming language written in python.
 
