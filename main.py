@@ -231,6 +231,9 @@ class Interpreter:
             "subtract": lambda args: subtract(args),
             "multiply": lambda args: multiply(args),
             "divide": lambda args: divide(args),
+            "int": lambda args: integer(args),
+            "float": lambda args: decimal(args),
+            "str": lambda args: string(args),
         }
 
     def call(self, expression):
@@ -267,33 +270,44 @@ def run(inp):
     interpreter.interpret(ast)
 
 # Functions in environment
-
-
 def add(args):
     assert(len(args) == 2)
     return args[0] + args[1]
-
 
 def subtract(args):
     assert(len(args) == 2)
     return args[0] - args[1]
 
-
 def multiply(args):
     assert(len(args) == 2)
     return args[0] * args[1]
-
 
 def divide(args):
     assert(len(args) == 2)
     return args[0] / args[1]
 
+# Integer is used for int in Solar
+def integer(args):
+    assert(len(args) == 1)
+    return int(args[0])
+
+# Decimal is used for float in Solar
+def decimal(args):
+    assert(len(args) == 1)
+    return float(args[0])
+
+# String used for str in Solar
+def string(args):
+    assert(len(args) == 1)
+    return str(args[0])
 
 def put(args):  # Equivalent to print in python
     assert(len(args) == 1)
     return args[0]
 # End functions in environment
 
+
+
 parserCurrent = 0
-run("(multiply 7 (add 1 (subtract(multiply(divide 21 3) 2) 1)))")
+run("(add (str (int '1')) (str (int '2')))")
 input()
