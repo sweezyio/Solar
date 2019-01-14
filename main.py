@@ -157,7 +157,7 @@ def lexer(inp):
             continue
 
         letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '$']
+                   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '$', '+', '-', '/', '*', '%']
         if char.lower() in letters:
             value = ""
             while char.lower() in letters:
@@ -227,11 +227,11 @@ def parser(tokens):
 class Interpreter:
     def __init__(self):
         self.environment = {
-            "add": lambda args: add(args),
-            "subtract": lambda args: subtract(args),
-            "multiply": lambda args: multiply(args),
-            "divide": lambda args: divide(args),
-            "modulo": lambda args: modulo(args),
+            "+": lambda args: add(args),
+            "-": lambda args: subtract(args),
+            "*": lambda args: multiply(args),
+            "/": lambda args: divide(args),
+            "%": lambda args: modulo(args),
             "int": lambda args: integer(args),
             "float": lambda args: decimal(args),
             "str": lambda args: string(args),
