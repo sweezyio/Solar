@@ -238,6 +238,7 @@ class Interpreter:
             "int": lambda args: integer(args),
             "float": lambda args: decimal(args),
             "str": lambda args: string(args),
+            "put": lambda args: put(args),
         }
 
     def call(self, expression):
