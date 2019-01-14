@@ -1,4 +1,7 @@
+import sys
 # inp means input, as in and input are keywords
+
+
 def lexer(inp):
     current = 0
     tokens = []
@@ -328,5 +331,11 @@ def put(args):  # Equivalent to print in python
 
 
 parserCurrent = 0
-run("(+ 1 (% 6 4))")
+if len(sys.argv) <= 1:
+    print("Solar Shell\n")
+    while True:
+        run(input(">"))
+else:
+    run(open(sys.argv[1]).read())
+
 input()
