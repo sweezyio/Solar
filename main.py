@@ -328,5 +328,5 @@ def put(args):  # Equivalent to print in python
 
 
 parserCurrent = 0
-run("(add 1 (modulo 6 4))")
+run("(+ 1 (% 6 4))")
 input()
