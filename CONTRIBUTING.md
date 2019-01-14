@@ -1,9 +1,9 @@
 # Contibuting #
 ## We thank you for taking the time to read these guidelines ##
-The project and people in this project are governed by Our Code of Conduct. Please report any abusive behaviour [here](https://github.com/Solar-language/issues/5).
+The project and people in this project are governed by Our Code of Conduct. Please report any abusive behaviour [here](https://github.com/Solar-language/Solar/issues/5).
 
 ### Questions ###
-Feel free to ask question in the [Questions Issue](https://github.com/SimpleBinary/Solar-language/issues/6).
+Feel free to ask question in the [Questions Issue](https://github.com/Solar-language/Solar/issues/6).
 
 ### Ways I can Contribute ###
 There are a few different ways of helping in Solar.
