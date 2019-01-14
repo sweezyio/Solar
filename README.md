@@ -18,6 +18,9 @@ Eg.
 ## Contributing
 Before contributing, please make sure you have read [The Contribution Guidelines](/CONTRIBUTING.md)
 
+## What is Solar's file extension
+Solar's file extension is `.solr`.
+
 ### SimpleBinary
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Owner of this orginisation
 
