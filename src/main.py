@@ -262,7 +262,7 @@ class Interpreter:
 
     def interpret(self, program):
         for expression in program["body"]:
-            print(self.evaluate(expression))
+            self.evaluate(expression)
 
 # Runs the interpreter
 
@@ -326,16 +326,33 @@ def string(args):
 
 def put(args):  # Equivalent to print in python
     assert(len(args) == 1)
+    print(args[0])
     return args[0]
 # End functions in environment
 
 
 parserCurrent = 0
-if len(sys.argv) <= 1:
-    print("Solar Shell\n")
-    while True:
-        run(input(">"))
-else:
-    run(open(sys.argv[1]).read())
 
-input()
+def runRepl():
+    while True:
+        try:
+            run(str(input("solar > ")))
+        except KeyboardInterrupt:
+            print("\nQuitting...")
+            sys.exit(1)
+        except:
+            print("Error:", sys.exc_info()[1])
+
+def runFile(filename):
+    with open(filename) as sourceFile:
+        run(sourceFile.read())
+
+def main():
+    if len(sys.argv) == 1:
+        runRepl()
+    elif len(sys.argv) == 2:
+        runFile(sys.argv[1])
+    else:
+        raise RuntimeError("Usage: solar [filename]")
+
+main()
