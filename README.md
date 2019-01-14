@@ -15,6 +15,8 @@ Eg.
 (get)
 ```
 
+## Contributing
+Before contributing, please make sure you have read [The Contribution Guidelines](/CONTRIBUTING.md)
 
 ### SimpleBinary
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Owner of this orginisation
