@@ -8,17 +8,10 @@ Eg.
 |------------------------------|--------------|
 |`(put "Hello, World!")`     |`put("Hello, World!")`|
 
-## FizzBuzz in Solar
+## Hello World in Solar
 ```
-x = (int (get "FizzBuzz Enter an Integer > "))
-(for y = 1; y <= x; ++y) {
-  (if x % 3 == 0) {
-    (put "Fizz")
-  }
-  (if x % 5 == 0) {
-    (put "Buzz"
-  }
-}
+` Comments in Solar `
+(put "Hello, World")
 (get)
 ```
 Note: This is a first idea, so the final result could look quite different.
