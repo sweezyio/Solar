@@ -14,7 +14,7 @@ Eg.
 (put "Hello, World")
 (get)
 ```
-
+More in [Examples](/examples)
 ## Contributing
 Before contributing, please make sure you have read [The Contribution Guidelines](/CONTRIBUTING.md)
 
