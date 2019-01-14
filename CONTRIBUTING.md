@@ -14,6 +14,9 @@ If you want something new to come in the next version of Solar, open an issue us
 #### Writing Code ####
 If you know Python and want to help, then feel free to create a pull request, again though, your code may or may not be used in Solar.
 
+### If you are part of the orginisation ###
+If you are part of the orginisation, feel free to edit code int the unstable file, from there we will update the main file.
+
 Thank you for taking the time to read these guidelines and contribute.
 - SimpleBinary
 
