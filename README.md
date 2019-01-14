@@ -6,20 +6,20 @@ Eg.
 
 |Lisp-Style                    |C-style       |
 |------------------------------|--------------|
-|`(print "Hello, World!")`     |`print("Hello, World!")`|
+|`(put "Hello, World!")`     |`put("Hello, World!")`|
 
 ## FizzBuzz in Solar
 ```
-x = (int (input "FizzBuzz Enter an Integer > "))
+x = (int (get "FizzBuzz Enter an Integer > "))
 (for y = 1; y <= x; ++y) {
   (if x % 3 == 0) {
-    (print "Fizz")
+    (put "Fizz")
   }
   (if x % 5 == 0) {
-    (print "Buzz"
+    (put "Buzz"
   }
 }
-(input)
+(get)
 ```
 Note: This is a first idea, so the final result could look quite different.
 
