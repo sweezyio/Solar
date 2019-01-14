@@ -231,6 +231,7 @@ class Interpreter:
             "subtract": lambda args: subtract(args),
             "multiply": lambda args: multiply(args),
             "divide": lambda args: divide(args),
+            "modulo": lambda args: modulo(args),
             "int": lambda args: integer(args),
             "float": lambda args: decimal(args),
             "str": lambda args: string(args),
@@ -261,6 +262,8 @@ class Interpreter:
             print(self.evaluate(expression))
 
 # Runs the interpreter
+
+
 def run(inp):
     ast = parser(lexer(inp))
     print("--START AST--")
@@ -270,36 +273,53 @@ def run(inp):
     interpreter.interpret(ast)
 
 # Functions in environment
+
+
 def add(args):
     assert(len(args) == 2)
     return args[0] + args[1]
+
 
 def subtract(args):
     assert(len(args) == 2)
     return args[0] - args[1]
 
+
 def multiply(args):
     assert(len(args) == 2)
     return args[0] * args[1]
+
 
 def divide(args):
     assert(len(args) == 2)
     return args[0] / args[1]
 
+
+def modulo(args):
+    assert(len(args) == 2)
+    return args[0] % args[1]
+
 # Integer is used for int in Solar
+
+
 def integer(args):
     assert(len(args) == 1)
     return int(args[0])
 
 # Decimal is used for float in Solar
+
+
 def decimal(args):
     assert(len(args) == 1)
     return float(args[0])
 
 # String used for str in Solar
+
+
 def string(args):
     assert(len(args) == 1)
     return str(args[0])
+
 
 def put(args):  # Equivalent to print in python
     assert(len(args) == 1)
@@ -307,7 +327,6 @@ def put(args):  # Equivalent to print in python
 # End functions in environment
 
 
-
 parserCurrent = 0
-run("(add (str (int '1')) (str (int '2')))")
+run("(add 1 (modulo 6 4))")
 input()
