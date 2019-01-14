@@ -28,7 +28,6 @@ def lexer(inp):
             })
             current += 1
             continue
-
         if char == "]":
             tokens.append({
                 "type": "bracket",
@@ -36,7 +35,6 @@ def lexer(inp):
             })
             current += 1
             continue
-
         if char == "{":
             tokens.append({
                 "type": "curly",
@@ -44,7 +42,6 @@ def lexer(inp):
             })
             current += 1
             continue
-
         if char == "}":
             tokens.append({
                 "type": "curly",
@@ -60,7 +57,6 @@ def lexer(inp):
             })
             current += 1
             continue
-
         if char == "-":
             tokens.append({
                 "type": "oper",
@@ -68,7 +64,6 @@ def lexer(inp):
             })
             current += 1
             continue
-
         if char == "/":
             tokens.append({
                 "type": "oper",
@@ -76,7 +71,6 @@ def lexer(inp):
             })
             current += 1
             continue
-
         if char == "*":
             tokens.append({
                 "type": "oper",
@@ -218,7 +212,7 @@ def parser(tokens):
             parserCurrent += 1
             return node
 
-        raise TypeError(token.type)
+        raise TypeError(token["type"])
     ast = {
         "type": "Program",
         "body": [],
@@ -229,13 +223,15 @@ def parser(tokens):
 
     return ast
 
+
 class Interpreter:
     def __init__(self):
         self.environment = {
             "add": lambda args: add(args),
             "subtract": lambda args: subtract(args),
+            "multiply": lambda args: multiply(args),
+            "divide": lambda args: divide(args),
         }
-
 
     def call(self, expression):
         functionName = expression["name"]
@@ -247,7 +243,6 @@ class Interpreter:
 
         return function(params)
 
-
     def evaluate(self, expression):
         typ = expression["type"]
 
@@ -258,33 +253,47 @@ class Interpreter:
         elif typ == "CallExpression":
             return self.call(expression)
 
-
     def interpret(self, program):
         for expression in program["body"]:
             print(self.evaluate(expression))
 
+# Runs the interpreter
+def run(inp):
+    ast = parser(lexer(inp))
+    print("--START AST--")
+    print(ast)
+    print("--END AST--\n")
+    interpreter = Interpreter()
+    interpreter.interpret(ast)
+
 # Functions in environment
+
+
 def add(args):
     assert(len(args) == 2)
     return args[0] + args[1]
 
+
 def subtract(args):
     assert(len(args) == 2)
     return args[0] - args[1]
+
+
+def multiply(args):
+    assert(len(args) == 2)
+    return args[0] * args[1]
+
+
+def divide(args):
+    assert(len(args) == 2)
+    return args[0] / args[1]
+
+
+def put(args):  # Equivalent to print in python
+    assert(len(args) == 1)
+    return args[0]
 # End functions in environment
 
 parserCurrent = 0
-ast = parser(lexer("(add 1 (subtract 2 1))"))
-
-# Print the AST for debugging
-print("--START AST--")
-print(ast)
-print("--END AST--\n")
-
-# Create a new Interpreter
-interpreter = Interpreter()
-
-# Interpret the AST
-interpreter.interpret(ast)
-
+run("(multiply 7 (add 1 (subtract(multiply(divide 21 3) 2) 1)))")
 input()
