@@ -229,7 +229,62 @@ def parser(tokens):
 
     return ast
 
+class Interpreter:
+    def __init__(self):
+        self.environment = {
+            "add": lambda args: add(args),
+            "subtract": lambda args: subtract(args),
+        }
+
+
+    def call(self, expression):
+        functionName = expression["name"]
+        function = self.environment[functionName]
+
+        params = []
+        for param in expression["params"]:
+            params.append(self.evaluate(param))
+
+        return function(params)
+
+
+    def evaluate(self, expression):
+        typ = expression["type"]
+
+        if typ == "NumberLiteral":
+            return expression["value"]
+        elif typ == "StringLiteral":
+            return expression["value"]
+        elif typ == "CallExpression":
+            return self.call(expression)
+
+
+    def interpret(self, program):
+        for expression in program["body"]:
+            print(self.evaluate(expression))
+
+# Functions in environment
+def add(args):
+    assert(len(args) == 2)
+    return args[0] + args[1]
+
+def subtract(args):
+    assert(len(args) == 2)
+    return args[0] - args[1]
+# End functions in environment
 
 parserCurrent = 0
-print(parser(lexer("(add 1 (subtract 2 1))")))
+ast = parser(lexer("(add 1 (subtract 2 1))"))
+
+# Print the AST for debugging
+print("--START AST--")
+print(ast)
+print("--END AST--\n")
+
+# Create a new Interpreter
+interpreter = Interpreter()
+
+# Interpret the AST
+interpreter.interpret(ast)
+
 input()
