@@ -1,6 +1,6 @@
 ![Solar-logo](https://github.com/Solar-language/Solar/blob/master/media/Solar-Logo.png?raw=true)
 # Solar
-A lisp-style programming language written in python.
+A lisp-style programming language designed for working out complex mathematics and written in Python.
 
 Eg.
 
@@ -14,7 +14,6 @@ Eg.
 (put "Hello, World")
 (get)
 ```
-Note: This is a first idea, so the final result could look quite different.
 
 
 ### SimpleBinary
