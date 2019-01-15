@@ -18,7 +18,7 @@ class Interpreter:
             "float": lambda args: self.decimal(args),
             "str": lambda args: self.string(args),
             "put": lambda args: self.put(args),
-            "get": lambda args: self.get(args)
+            "get": lambda args: self.get(args),
             "=": lambda args: self.equals(args),
             ">": lambda args: self.greater(args),
             "<": lambda args: self.less(args),
