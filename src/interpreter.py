@@ -200,6 +200,6 @@ class Interpreter:
   
 # --- End functions in environment --- #
 
-def assertArgLength(args, expectedLength, functionName):
+def assertArgsLength(args, expectedLength, functionName):
     if len(args) != expectedLength:
         raise SolarError(f"Function '{functionName}' expected {expectedLength} args, but got {len(args)}.")
