@@ -22,6 +22,8 @@ In the topic of reserved names, we will split it up into two parts: Reserved Var
 
 | Name   | Usage                   | Implemented? |
 |:------:|:-----------------------:|:------------:|
+|true    |True value               | No|
+|false   |False value              | No|
 |datetime|Display the time and date| No|
 
 Unfinished...
