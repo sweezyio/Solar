@@ -7,6 +7,7 @@ class Lexer():
         self.tokens = []
         self.inp = ""
         
+        
     def lex(self, inp):
         self.inp = inp
         while self.current < len(self.inp):
@@ -46,7 +47,8 @@ class Lexer():
                 
             raise RuntimeError(f"Unrecognized character {char}.")
         return self.tokens
-                
+         
+        
     def skipWhitespace(self):
         while self.current < len(self.inp):
             if self.inp[self.current] in [' ', '\t', '\n', '\r']:
@@ -63,6 +65,7 @@ class Lexer():
                 
             # We didn't find whitespace
             break
+             
                 
     def string(self, quote):
         # Consume the opening quote
@@ -82,6 +85,7 @@ class Lexer():
             "type": "string",
             "value": value,
         })
+    
     
     def number(self):
         value = ""
@@ -114,57 +118,76 @@ class Lexer():
         })
         self.current += len(str(value))
 
+        
+class Parser():
+    def __init__(self):
+        self.tokens = []
+        self.current = 0
+        self.ast = {
+            "type": "Program",
+            "body": []
+        }
+        
+        
+    def parse(self, tokens):
+        self.tokens = tokens
+        while self.current < len(self.tokens):
+            self.ast["body"].append(self.parseExpression())
+        return self.ast
+            
+        
+    def parseExpression(self):
+        token = self.tokens[self.current]
+        if token["type"] == "number":
+            return self.parseNumber()
+        if token["type"] == "string":
+            return self.parseString()
+        if token["type"] == "paren" and token["value"] == "(":
+            return self.parseCall()
+            
+        raise TypeError(f"Expected expression at '{token['value']}'.")
+           
+                        
+    def parseNumber(self):
+        token = self.tokens[self.current]
+        self.current += 1
+        return {
+            "type": "NumberLiteral",
+            "value": token["value"]
+        }
+              
+                        
+    def parseString(self):
+        token = self.tokens[self.current]
+        self.current += 1
+        return {
+            "type": "StringLiteral",
+            "value": token["value"]
+        }
+         
+                        
+    def parseCall(self):
+        self.current += 1
+        name = self.tokens[self.current]["value"]
+        self.current += 1
 
-def parser(tokens):
+        params = []
+        
+        token = self.tokens[self.current]
+        while token["type"] != "paren" or (token["type"] == "paren" and token["value"] != ")"):
+            params.append(self.parseExpression())
+            token = self.tokens[self.current]
+        
+        # Eat the closing paren
+        self.current += 1
 
-    global parserCurrent
-    parserCurrent = 0
+        return {
+            "type": "CallExpression",
+            "name": name,
+            "params": params
+        }
 
-    def walk():
-        global parserCurrent
-        token = tokens[parserCurrent]
-        if token["type"] == 'number':
-            parserCurrent += 1
-            return {
-                "type": "NumberLiteral",
-                "value": token["value"],
-            }
-
-        if token["type"] == 'string':
-            parserCurrent += 1
-            return {
-                "type": "StringLiteral",
-                "value": token["value"],
-            }
-
-        if token["type"] == 'paren' and token["value"] == "(":
-            parserCurrent += 1
-            token = tokens[parserCurrent]
-            node = {
-                "type": "CallExpression",
-                "name": token["value"],
-                "params": [],
-            }
-            parserCurrent += 1
-            token = tokens[parserCurrent]
-            while token["type"] != "paren" or token["type"] == "paren" and token["value"] != ")":
-                node["params"].append(walk())
-                token = tokens[parserCurrent]
-            parserCurrent += 1
-            return node
-
-        raise TypeError(token["type"])
-    ast = {
-        "type": "Program",
-        "body": [],
-    }
-
-    while parserCurrent < len(tokens):
-        ast["body"].append(walk())
-
-    return ast
-
-
+                        
 class Interpreter:
     def __init__(self):
         self.environment = {
@@ -179,6 +202,7 @@ class Interpreter:
             "put": lambda args: put(args),
         }
 
+                        
     def call(self, expression):
         functionName = expression["name"]
         function = self.environment[functionName]
@@ -189,6 +213,7 @@ class Interpreter:
 
         return function(params)
 
+                        
     def evaluate(self, expression):
         typ = expression["type"]
 
@@ -203,19 +228,8 @@ class Interpreter:
         for expression in program["body"]:
             self.evaluate(expression)
 
-# Runs the interpreter
-
-
-def run(inp):
-    ast = parser(Lexer().lex)
-    print("--START AST--")
-    print(ast)
-    print("--END AST--\n")
-    Interpreter().interpret(ast)
-
+                        
 # Functions in environment
-
-
 def add(args):
     assert(len(args) == 2)
     return args[0] + args[1]
@@ -240,23 +254,20 @@ def modulo(args):
     assert(len(args) == 2)
     return args[0] % args[1]
 
+                        
 # Integer is used for int in Solar
-
-
 def integer(args):
     assert(len(args) == 1)
     return int(args[0])
 
+                        
 # Decimal is used for float in Solar
-
-
 def decimal(args):
     assert(len(args) == 1)
     return float(args[0])
 
+                        
 # String used for str in Solar
-
-
 def string(args):
     assert(len(args) == 1)
     return str(args[0])
@@ -268,9 +279,18 @@ def put(args):  # Equivalent to print in python
     return args[0]
 # End functions in environment
 
+                        
+def run(inp):
+    tokens = Lexer().lex(inp)
+    ast = Parser().parse(tokens)
 
-parserCurrent = 0
+    print("--START AST--")
+    print(ast)
+    print("--END AST--\n")
 
+    Interpreter().interpret(ast)
+
+                        
 def runRepl():
     while True:
         try:
@@ -280,11 +300,14 @@ def runRepl():
             sys.exit(1)
         except:
             print("Error:", sys.exc_info()[1])
+            raise
 
+                        
 def runFile(filename):
     with open(filename) as sourceFile:
         run(sourceFile.read())
 
+                        
 def main():
     if len(sys.argv) == 1:
         runRepl()
@@ -293,4 +316,5 @@ def main():
     else:
         raise RuntimeError("Usage: solar [filename]")
 
+                        
 main()
