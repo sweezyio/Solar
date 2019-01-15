@@ -12,7 +12,6 @@ Eg.
 ```
 ` Comments in Solar `
 (put "Hello, World")
-(get)
 ```
 More in [Examples](/examples)
 ## Contributing
