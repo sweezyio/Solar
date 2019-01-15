@@ -195,6 +195,7 @@ class Interpreter:
         
     # Name: 'raise'
     def raiseError(self, args):
+        assertArgsLength(args, 1, "raise")
         raise SolarError(f"Error raised: {self.evaluate(args[0])}")
   
 # --- End functions in environment --- #
