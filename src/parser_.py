@@ -30,6 +30,10 @@ class Parser():
             return self.parseNumber()
         if token["type"] == "string":
             return self.parseString()
+        if token["type"] == "bool":
+            return self.parseBool()
+        if token["type"] == "null":
+            return self.parseNull()
         if token["type"] == "name":
             return self.parseVariable()
         if token["type"] == "paren" and token["value"] == "(":
@@ -55,6 +59,24 @@ class Parser():
             "value": token["value"]
         }
          
+                         
+    def parseBool(self):
+        token = self.tokens[self.current]
+        self.current += 1
+        return {
+            "type": "BoolLiteral",
+            "value": token["value"]
+        }
+           
+                         
+    def parseNull(self):
+        token = self.tokens[self.current]
+        self.current += 1
+        return {
+            "type": "NullLiteral",
+        }
+         
+                         
     def parseVariable(self):
         token = self.tokens[self.current]
         self.current += 1
@@ -62,7 +84,8 @@ class Parser():
             "type": "VariableExpression",
             "value": token["value"]
         }
-                        
+            
+                         
     def parseCall(self):
         self.current += 1
         
