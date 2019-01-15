@@ -26,6 +26,7 @@ class Interpreter:
             "upper": lambda args: self.stdUpper(args),
             "encode": lambda args: self.stdEncode(args),
             "decode": lambda args: self.stdDecode(args),
+            "def": lambda args: self.stdDef(args),
             "set": lambda args: self.stdSet(args),
             "raise": lambda args: self.stdRaise(args),
         }
@@ -74,6 +75,25 @@ class Interpreter:
                         
     # --- Functions in environment --- #
 
+    # Name: 'def'
+    def stdDef(self, args):
+        # May either have 1 or 2 args
+        if len(args) > 2:
+            raise SolarError(f"Function 'def' expected 1 or 2 args, but got {len(args)}.")
+            
+        name = args[0]
+
+        if name["type"] != "VariableExpression":
+            raise SolarError("Can only assign to variable names.")
+            
+        value = self.evaluate(args[1]) if len(args) == 2 else None
+        
+        if name["value"] in self.variables.keys():
+            raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
+        
+        self.variables[name["value"]] = value
+        
+    
     # Name: 'set'
     def stdSet(self, args):
         assertArgsLength(args, 2, "set")
@@ -83,7 +103,10 @@ class Interpreter:
         if name["type"] != "VariableExpression":
             raise SolarError("Can only assign to variable names.")
 
-        self.variables[name["value"]] = self.evaluate(args[1])
+        if name["value"] in self.variables.keys():
+            self.variables[name["value"]] = self.evaluate(args[1])
+                             
+        raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
 
 
     # Name: '+'
