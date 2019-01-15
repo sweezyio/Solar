@@ -55,7 +55,7 @@ Unfinished...
 |get     |Read a line of input from stdin| Yes |
 |set     |Set a variable           | Yes|
 |        |**Errors**        |     |
-|raise   |Raise a SolarError   | No |
+|raise   |Raise a SolarError   | Yes |
 
 More coming soon...
 
