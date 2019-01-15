@@ -55,12 +55,15 @@ class Interpreter:
     def evaluate(self, expression):
         typ = expression["type"]
 
-        if typ == "NumberLiteral":
+        if (typ == "NumberLiteral" or
+                typ == "StringLiteral" or
+                typ == "BoolLiteral" or
+                typ == "NullLiteral"):
             return expression["value"]
-        elif typ == "StringLiteral":
-            return expression["value"]
+        
         elif typ == "VariableExpression":
             return self.getVariable(expression)
+        
         elif typ == "CallExpression":
             return self.call(expression)
 
