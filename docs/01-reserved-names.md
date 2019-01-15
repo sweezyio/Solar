@@ -52,9 +52,9 @@ Unfinished...
 |<       |Less Than                | Yes|
 |>=      |Greater Than or Equal To | No |
 |<=      |Less Than or Equal To    | No |
-|        |**Declarations**         |    |    
-|def     |Declare a variable       | No |
-|set     |Reassign a variable      | No |
+|        |**Variables**         |    |    
+|def     |Declare a variable       | Yes |
+|set     |Reassign a variable      | Yes |
 |        |**Control flow**         |    |
 |if      |If expression.           | No |
 |elif    |May follow an if expression| No |
