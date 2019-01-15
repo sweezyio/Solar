@@ -27,6 +27,7 @@ class Interpreter:
             "encode": lambda args: self.enc(args),
             "decode": lambda args: self.dec(args),
             "set": lambda args: self.setVariable(args),
+            "raise": lambda args: self.raiseError(args),
         }
         self.variables = {}
 
@@ -72,7 +73,7 @@ class Interpreter:
 
     # Name: 'set'
     def setVariable(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "set")
 
         name = args[0]
 
@@ -84,55 +85,55 @@ class Interpreter:
 
     # Name: '+'
     def add(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "+")
         return self.evaluate(args[0]) + self.evaluate(args[1])
 
   
     # Name: '-'
     def subtract(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "-")
         return self.evaluate(args[0]) - self.evaluate(args[1])
 
   
     # Name: '*'
     def multiply(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "*")
         return self.evaluate(args[0]) * self.evaluate(args[1])
 
   
     # Name: '/'
     def divide(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "/")
         return self.evaluate(args[0]) / self.evaluate(args[1])
 
   
     # Name: '%'
     def modulo(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "%")
         return self.evaluate(args[0]) % self.evaluate(args[1])
 
                         
     # Name: 'int'
     def integer(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "int")
         return int(self.evaluate(args[0]))
 
                         
     # Name: 'float'
     def decimal(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "float")
         return float(self.evaluate(args[0]))
 
                         
     # Name: 'str'
     def string(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "str")
         return str(self.evaluate(args[0]))
 
   
     # Name: 'put'
     def put(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "put")
         val = self.evaluate(args[0])
         print(val)
         return val
@@ -140,55 +141,64 @@ class Interpreter:
     
     # Name: 'get'
     def get(self, args):
-        assert(len(args) == 0)
+        assertArgsLength(args, 0, "get")
         return input()
 
     
-    # Name '='
+    # Name: '='
     def equals(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "=")
         return self.evaluate(args[0]) == self.evaluate(args[1])
 
     
-    # Name '>'
+    # Name: '>'
     def greater(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, ">")
         return self.evaluate(args[0]) > self.evaluate(args[1])
 
     
-    # Name '<'
+    # Name: '<'
     def less(self, args):
-        assert(len(args) == 2)
+        assertArgsLength(args, 2, "<")
         return self.evaluate(args[0]) < self.evaluate(args[1])
 
     
-    # Name 'lower'
+    # Name: 'lower'
     def lower(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "lower")
         return self.evaluate(args[0]).lower()
 
     
-    # Name 'upper'
+    # Name: 'upper'
     def upper(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "upper")
         return self.evaluate(args[0]).upper()
 
     
-    # Name 'encode'
+    # Name: 'encode'
     def enc(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "encode")
         li = []
         for i in self.evaluate(args[0]):
             li.append(ord(i))
         return li
 
     
-    # Name 'decode'
+    # Name: 'decode'
     def dec(self, args):
-        assert(len(args) == 1)
+        assertArgsLength(args, 1, "decode")
         if isdigit(args[0]):
             return chr(self.evaluate(args[0]))
         else:
-            raise SolarError(f"Function 'dec' expected a numeric argument, but got '{args[0]}'.")
+            raise SolarError(f"Function 'decode' expected a numeric argument, but got '{args[0]}'.")
+          
+        
+    # Name: 'raise'
+    def raiseError(self, args):
+        raise SolarError(f"Error raised: {self.evaluate(args[0])}")
   
 # --- End functions in environment --- #
+
+def assertArgLength(args, expectedLength, functionName):
+    if len(args) != expectedLength:
+        raise SolarError(f"Function '{functionName}' expected {expectedLength} args, but got {len(args)}.")
