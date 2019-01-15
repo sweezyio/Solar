@@ -1,186 +1,124 @@
 import sys
 # inp means input, as in and input are keywords
 
-
-def lexer(inp):
-    current = 0
-    tokens = []
-    while current < len(inp):
-        char = inp[current]
-
-        if char == "(":
-            tokens.append({
-                "type": "paren",
-                "value": "(",
-            })
-            current += 1
-            continue
-
-        if char == ")":
-            tokens.append({
-                "type": "paren",
-                "value": ")",
-            })
-            current += 1
-            continue
-
-        """if char == "[":
-            tokens.append({
-                "type": "bracket",
-                "value": "[",
-            })
-            current += 1
-            continue
-        if char == "]":
-            tokens.append({
-                "type": "bracket",
-                "value": "]",
-            })
-            current += 1
-            continue
-        if char == "{":
-            tokens.append({
-                "type": "curly",
-                "value": "{",
-            })
-            current += 1
-            continue
-        if char == "}":
-            tokens.append({
-                "type": "curly",
-                "value": "}",
-            })
-            current += 1
-            continue
+class Lexer():
+    def __init__(self):
+        self.current = 0
+        self.tokens = []
+        self.inp = ""
         
-        if char == "+":
-            tokens.append({
-                "type": "oper",
-                "value": "+",
-            })
-            current += 1
-            continue
-        if char == "-":
-            tokens.append({
-                "type": "oper",
-                "value": "-",
-            })
-            current += 1
-            continue
-        if char == "/":
-            tokens.append({
-                "type": "oper",
-                "value": "/",
-            })
-            current += 1
-            continue
-        if char == "*":
-            tokens.append({
-                "type": "oper",
-                "value": "*",
-            })
-            current += 1
-            continue
-        
-        if char == "=":
+    def lex(self, inp):
+        self.inp = inp
+        while self.current < len(self.inp):
+            self.skipWhitespace()
+            char = self.inp[self.current]
             
-            tokens.append({
-                "type": "oper",
-                "value": "=",
-            })
-            current += 1
-            continue
+            # Single character tokens
+            if char == "(":
+                self.addToken("paren", "(")
+                continue
+            if char == ")":
+                self.addToken("paren", ")")
+                continue
+                
+            # Strings
+            if char == '"':
+                self.string('"')
+                continue
+                
+            if char == "'":
+                self.string("'")
+                continue
+                
+            # Numbers
+            if char in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+                self.number()
+                continue
+                
+            # Names
+            validName = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                         '$', '+', '-', '/', '*', '%']
+            
+            if char.lower() in validName:
+                self.name()
+                continue
+                
+            raise RuntimeError(f"Unrecognized character {char}.")
+        return self.tokens
+                
+    def skipWhitespace(self):
+        while self.current < len(self.inp):
+            if self.inp[self.current] in [' ', '\t', '\n', '\r']:
+                self.current += 1
+                continue
+            
+            if self.inp[self.current] == '`':
+                current += 1
+                while self.inp[self.current] != '`':
+                    current += 1
+                # Consume the closing backtick
+                current += 1
+                continue
+                
+            # We didn't find whitespace
+            break
+                
+    def string(self, quote):
+        # Consume the opening quote
+        self.current += 1
+        value = ""
         
-        if char == "~":
-            tokens.append({
-                "type": "oper",
-                "value": "~",
-            })
-            current += 1
-            continue"""
-
-        if char == "`":
-            current += 1
-            char = inp[current]
-            while char != '`':
-                current += 1
-                char = inp[current]
-            current += 1
-            char = inp[current]
-            continue
-
-        whitespace = ["\n", "\t", " "]
-        if char in whitespace:
-            current += 1
-            continue
-
-        numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        if char in numbers:
-            value = ""
-            while char in numbers:
-                value += char
-                current += 1
-                char = inp[current]
-            tokens.append({
-                "type": "number",
-                "value": int(value),
-            })
-            continue
-
-        if char == '"':
-            value = ""
-            current += 1
-            char = inp[current]
-            while char != '"':
-                value += char
-                current += 1
-                char = inp[current]
-            current += 1
-            char = inp[current]
-            tokens.append({
-                "type": "string",
-                "value": value,
-            })
-            continue
-
-        if char == "'":
-            value = ""
-            current += 1
-            char = inp[current]
-            while char != "'":
-                value += char
-                current += 1
-                char = inp[current]
-            current += 1
-            char = inp[current]
-            tokens.append({
-                "type": "string",
-                "value": value,
-            })
-            continue
-
-        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '$', '+', '-', '/', '*', '%']
-        if char.lower() in letters:
-            value = ""
-            while char.lower() in letters:
-                value += char.lower()
-                current += 1
-                char = inp[current]
-            tokens.append({
-                "type": "name",
-                "value": value,
-            })
-            continue
-
-        raise TypeError("I don't know what this character is: " + char)
-
-    return tokens
+        char = self.inp[self.current]
+        while char != quote:
+            value += char
+            self.current += 1
+            char = self.inp[self.current]
+            
+        # Consume the closing quote
+        self.current += 1
+        
+        self.tokens.append({
+            "type": "string",
+            "value": value,
+        })
+    
+    def number(self):
+        value = ""
+        while self.inp[self.current] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            value += self.inp[self.current]
+            self.current += 1
+        self.tokens.append({
+            "type": "number",
+            "value": int(value),
+        })
+        
+    def name(self):
+        validName = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                     '$', '+', '-', '/', '*', '%']
+        value = ""
+        while self.inp[self.current].lower() in validName:
+            value += self.inp[self.current].lower()
+            self.current += 1
+        self.tokens.append({
+            "type": "name",
+            "value": value,
+        })
+        
+                
+    def addToken(self, typ, value):
+        self.tokens.append({
+            "type": typ,
+            "value": value,
+        })
+        self.current += len(str(value))
 
 
 def parser(tokens):
 
     global parserCurrent
+    parserCurrent = 0
 
     def walk():
         global parserCurrent
@@ -269,12 +207,11 @@ class Interpreter:
 
 
 def run(inp):
-    ast = parser(lexer(inp))
+    ast = parser(Lexer().lex)
     print("--START AST--")
     print(ast)
     print("--END AST--\n")
-    interpreter = Interpreter()
-    interpreter.interpret(ast)
+    Interpreter().interpret(ast)
 
 # Functions in environment
 
