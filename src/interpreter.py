@@ -18,7 +18,13 @@ class Interpreter:
             "float": lambda args: self.decimal(args),
             "str": lambda args: self.string(args),
             "put": lambda args: self.put(args),
-
+            "=": lambda args: self.equals(args),
+            ">": lambda args: self.greater(args),
+            "<": lambda args: self.less(args),
+            "lower": lambda args: self.lower(args),
+            "upper": lambda args: self.upper(args),
+            "encode": lambda args: self.enc(args),
+            "decode": lambda args: self.dec(args),
             "set": lambda args: self.setVariable(args),
         }
         self.variables = {}
@@ -129,5 +135,54 @@ class Interpreter:
         val = self.evaluate(args[0])
         print(val)
         return val
+
+    # Name '='
+
+    def equals(self, args):
+        assert(len(args) == 2)
+        return args[0] == args[1]
+
+    # Name '>'
+
+
+    def greater(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) > self.evaluate(args[1])
+
+    # Name '<'
+
+    def less(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) < self.evaluate(args[1])
+
+    # Name 'lower'
+
+    def lower(self, args):
+        assert(len(args) == 1)
+        return self.evaluate(args[0]).lower()
+
+    # Name 'upper'
+
+    def upper(self, args):
+        assert(len(args) == 1)
+        return self.evaluate(args[0]).upper()
+
+    # Name 'encode'
+
+    def enc(self, args):
+        assert(len(args) == 1)
+        li = []
+        for i in self.evaluate(args[0]):
+            li.append(ord(i))
+        return li
+
+    # Name 'decode'
+
+    def dec(self, args):
+        assert(len(args) == 1)
+        if isdigit(args[0]):
+            return chr(self.evaluate(args[0]))
+        else:
+            raise RuntimeError(f"Invalid Character {args[0]}, must be numeric.")
   
 # --- End functions in environment --- #
