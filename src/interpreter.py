@@ -15,7 +15,11 @@ class Interpreter:
                         
     def call(self, expression):
         functionName = expression["name"]
-        function = self.environment[functionName]
+        
+        try:
+            function = self.environment[functionName]
+        except KeyError:
+            raise RuntimeError(f"Undefined function '{functionName}'.")
 
         params = []
         for param in expression["params"]:
