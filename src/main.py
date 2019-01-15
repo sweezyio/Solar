@@ -47,7 +47,7 @@ def getReplInput():
         inpu += inp
         walk(inp)
         
-    return inpu
+    return inpu.replace("\n", " ")
      
         
 def runRepl():
