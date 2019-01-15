@@ -18,6 +18,7 @@ class Interpreter:
             "float": lambda args: self.decimal(args),
             "str": lambda args: self.string(args),
             "put": lambda args: self.put(args),
+            "get": lambda args: self.get(args)
             "=": lambda args: self.equals(args),
             ">": lambda args: self.greater(args),
             "<": lambda args: self.less(args),
@@ -78,7 +79,7 @@ class Interpreter:
         if name["type"] != "VariableExpression":
             raise SolarError("Can only assign to variable names.")
 
-        self.variables[name["value"]] = self.evaluate(args[1])   
+        self.variables[name["value"]] = self.evaluate(args[1])
 
 
     # Name: '+'
@@ -135,40 +136,45 @@ class Interpreter:
         val = self.evaluate(args[0])
         print(val)
         return val
+    
+    
+    # Name: 'get'
+    def get(self, args):
+        assert(len(args) == 0)
+        return input()
 
+    
     # Name '='
-
     def equals(self, args):
         assert(len(args) == 2)
-        return args[0] == args[1]
+        return self.evaluate(args[0]) == self.evaluate(args[1])
 
+    
     # Name '>'
-
-
     def greater(self, args):
         assert(len(args) == 2)
         return self.evaluate(args[0]) > self.evaluate(args[1])
 
+    
     # Name '<'
-
     def less(self, args):
         assert(len(args) == 2)
         return self.evaluate(args[0]) < self.evaluate(args[1])
 
+    
     # Name 'lower'
-
     def lower(self, args):
         assert(len(args) == 1)
         return self.evaluate(args[0]).lower()
 
+    
     # Name 'upper'
-
     def upper(self, args):
         assert(len(args) == 1)
         return self.evaluate(args[0]).upper()
 
+    
     # Name 'encode'
-
     def enc(self, args):
         assert(len(args) == 1)
         li = []
@@ -176,13 +182,13 @@ class Interpreter:
             li.append(ord(i))
         return li
 
+    
     # Name 'decode'
-
     def dec(self, args):
         assert(len(args) == 1)
         if isdigit(args[0]):
             return chr(self.evaluate(args[0]))
         else:
-            raise RuntimeError(f"Invalid Character {args[0]}, must be numeric.")
+            raise SolarError(f"Function 'dec' expected a numeric argument, but got '{args[0]}'.")
   
 # --- End functions in environment --- #
