@@ -18,6 +18,7 @@ class Parser():
         
     def parse(self, tokens):
         self.tokens = tokens
+        self.current = 0
         while self.current < len(self.tokens):
             self.ast["body"].append(self.parseExpression())
         return self.ast
@@ -29,6 +30,8 @@ class Parser():
             return self.parseNumber()
         if token["type"] == "string":
             return self.parseString()
+        if token["type"] == "name":
+            return self.parseVariable()
         if token["type"] == "paren" and token["value"] == "(":
             return self.parseCall()
             
@@ -52,6 +55,13 @@ class Parser():
             "value": token["value"]
         }
          
+    def parseVariable(self):
+        token = self.tokens[self.current]
+        self.current += 1
+        return {
+            "type": "VariableExpression",
+            "value": token["value"]
+        }
                         
     def parseCall(self):
         self.current += 1

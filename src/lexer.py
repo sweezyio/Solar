@@ -15,6 +15,7 @@ class Lexer():
         
     def lex(self, inp):
         self.inp = inp
+        self.current = 0
         while self.current < len(self.inp):
             self.skipWhitespace()
             char = self.inp[self.current]

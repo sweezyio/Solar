@@ -8,32 +8,40 @@ from error import SolarError
 
 class Interpreter:
     def __init__(self):
-        self.environment = {
-            "+": lambda args: add(args),
-            "-": lambda args: subtract(args),
-            "*": lambda args: multiply(args),
-            "/": lambda args: divide(args),
-            "%": lambda args: modulo(args),
-            "int": lambda args: integer(args),
-            "float": lambda args: decimal(args),
-            "str": lambda args: string(args),
-            "put": lambda args: put(args),
+        self.functions = {
+            "+": lambda args: self.add(args),
+            "-": lambda args: self.subtract(args),
+            "*": lambda args: self.multiply(args),
+            "/": lambda args: self.divide(args),
+            "%": lambda args: self.modulo(args),
+            "int": lambda args: self.integer(args),
+            "float": lambda args: self.decimal(args),
+            "str": lambda args: self.string(args),
+            "put": lambda args: self.put(args),
+
+            "set": lambda args: self.setVariable(args),
         }
+        self.variables = {}
+
+
+    def getVariable(self, expression):
+        name = expression["value"]
+
+        try:
+            return self.variables[name]
+        except KeyError:
+            raise SolarError(f"Runtime error: Undefined variable {name}.")
 
                         
     def call(self, expression):
         functionName = expression["name"]
         
         try:
-            function = self.environment[functionName]
+            function = self.functions[functionName]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
 
-        params = []
-        for param in expression["params"]:
-            params.append(self.evaluate(param))
-
-        return function(params)
+        return function(expression["params"])
 
                         
     def evaluate(self, expression):
@@ -43,6 +51,8 @@ class Interpreter:
             return expression["value"]
         elif typ == "StringLiteral":
             return expression["value"]
+        elif typ == "VariableExpression":
+            return self.getVariable(expression)
         elif typ == "CallExpression":
             return self.call(expression)
 
@@ -51,60 +61,73 @@ class Interpreter:
             self.evaluate(expression)
 
                         
-# --- Functions in environment --- #
+    # --- Functions in environment --- #
 
-# Name: '+'
-def add(args):
-    assert(len(args) == 2)
-    return args[0] + args[1]
+    # Name: 'set'
+    def setVariable(self, args):
+        assert(len(args) == 2)
 
-  
-# Name: '-'
-def subtract(args):
-    assert(len(args) == 2)
-    return args[0] - args[1]
+        name = args[0]
 
-  
-# Name: '*'
-def multiply(args):
-    assert(len(args) == 2)
-    return args[0] * args[1]
+        if name["type"] != "VariableExpression":
+            raise SolarError("Can only assign to variable names.")
 
-  
-# Name: '/'
-def divide(args):
-    assert(len(args) == 2)
-    return args[0] / args[1]
+        self.variables[name["value"]] = self.evaluate(args[1])   
+
+
+    # Name: '+'
+    def add(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) + self.evaluate(args[1])
 
   
-# Name: '%'
-def modulo(args):
-    assert(len(args) == 2)
-    return args[0] % args[1]
+    # Name: '-'
+    def subtract(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) - self.evaluate(args[1])
+
+  
+    # Name: '*'
+    def multiply(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) * self.evaluate(args[1])
+
+  
+    # Name: '/'
+    def divide(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) / self.evaluate(args[1])
+
+  
+    # Name: '%'
+    def modulo(self, args):
+        assert(len(args) == 2)
+        return self.evaluate(args[0]) % self.evaluate(args[1])
 
                         
-# Name: 'int'
-def integer(args):
-    assert(len(args) == 1)
-    return int(args[0])
+    # Name: 'int'
+    def integer(self, args):
+        assert(len(args) == 1)
+        return int(self.evaluate(args[0]))
 
                         
-# Name: 'float'
-def decimal(args):
-    assert(len(args) == 1)
-    return float(args[0])
+    # Name: 'float'
+    def decimal(self, args):
+        assert(len(args) == 1)
+        return float(self.evaluate(args[0]))
 
                         
-# Name: 'str'
-def string(args):
-    assert(len(args) == 1)
-    return str(args[0])
+    # Name: 'str'
+    def string(self, args):
+        assert(len(args) == 1)
+        return str(self.evaluate(args[0]))
 
   
-# Name: 'put'
-def put(args):
-    assert(len(args) == 1)
-    print(args[0])
-    return args[0]
+    # Name: 'put'
+    def put(self, args):
+        assert(len(args) == 1)
+        val = self.evaluate(args[0])
+        print(val)
+        return val
   
 # --- End functions in environment --- #

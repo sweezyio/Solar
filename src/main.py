@@ -11,9 +11,14 @@ from parser_ import Parser
 from interpreter import Interpreter
 
 from error import SolarError
+
         
-    
+interpreter = Interpreter()
+
+
 def run(inp):
+    global interpreter
+
     tokens = Lexer().lex(inp)
     ast = Parser().parse(tokens)
 
@@ -21,7 +26,7 @@ def run(inp):
     print(ast)
     print("--END AST--\n")
 
-    Interpreter().interpret(ast)
+    interpreter.interpret(ast)
 
                         
 def runRepl():
