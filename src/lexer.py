@@ -121,9 +121,11 @@ class Lexer():
         
         if value == "true" or value == "false":
             type = "bool"
+            value = bool(value)
             
         if value == "null":
             type = "null"
+            value = None
         
         self.tokens.append({
             "type": type,
