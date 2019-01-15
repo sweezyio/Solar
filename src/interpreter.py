@@ -8,7 +8,7 @@ from error import SolarError
 
 class Interpreter:
     def __init__(self):
-        self.functions = {
+        self.environment = {
             "+": lambda args: self.stdAdd(args),
             "-": lambda args: self.stdSubtract(args),
             "*": lambda args: self.stdMultiply(args),
@@ -30,14 +30,13 @@ class Interpreter:
             "set": lambda args: self.stdSet(args),
             "raise": lambda args: self.stdRaise(args),
         }
-        self.variables = {}
 
 
     def getVariable(self, expression):
         name = expression["value"]
 
         try:
-            return self.variables[name]
+            return self.environment[name]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined variable {name}.")
 
@@ -46,7 +45,7 @@ class Interpreter:
         functionName = expression["name"]
         
         try:
-            function = self.functions[functionName]
+            function = self.environment[functionName]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
 
@@ -88,10 +87,10 @@ class Interpreter:
             
         value = self.evaluate(args[1]) if len(args) == 2 else None
         
-        if name["value"] in self.variables.keys():
+        if name["value"] in self.environment.keys():
             raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
         
-        self.variables[name["value"]] = value
+        self.environment[name["value"]] = value
         
     
     # Name: 'set'
@@ -103,8 +102,8 @@ class Interpreter:
         if name["type"] != "VariableExpression":
             raise SolarError("Can only assign to variable names.")
 
-        if name["value"] in self.variables.keys():
-            self.variables[name["value"]] = self.evaluate(args[1])
+        if name["value"] in self.environment.keys():
+            self.environment[name["value"]] = self.evaluate(args[1])
         else:                    
             raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
 
