@@ -18,6 +18,17 @@ Solar is a Lisp-Style language that uses built-in functions to run everything, m
 
 In the topic of reserved names, we will split it up into two parts: Reserved Variable Names and Reserved Function Names, we will start with the smaller Reserved variable names.
 
+### Keywords
+These reserved names below are neither functions nor variables; rather they are keywords built in to the language:
+```
+
+| Name   | Usage                   | Implemented? |
+|:------:|:-----------------------:|:------------:|
+|true|True boolean value|Yes|
+|false|False boolean value|Yes|
+|null|Null value|Yes|
+```
+
 ### Reserved Variable Names 
 
 | Name   | Usage                   | Implemented? |
@@ -49,6 +60,7 @@ Unfinished...
 |else    |May follow an if or elif expression|No|
 |while   |While expression         |No  |
 |        |**Converters**           |    |
+|list    |Return all parameters as a list| No |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
 |float   |Convert to Float         | Yes|
