@@ -29,7 +29,7 @@ def run(inp):
     interpreter.interpret(ast)
 
 def getReplInput():
-    inp = str(input("solar > "))
+    inpu = str(input("solar > "))
     openParens = 0
         
     def walk(inp):
