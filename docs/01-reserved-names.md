@@ -52,8 +52,10 @@ Unfinished...
 |decode  |Convert Unicode to Text  | Yes|
 |        |**I/O**           |    |
 |put     |Print output             | Yes|
-|get     |Print input              | No |
+|get     |Read a line of input from stdin| Yes |
 |set     |Set a variable           | Yes|
+|        |**Errors**        |     |
+|raise   |Raise a SolarError   | No |
 
 More coming soon...
 
