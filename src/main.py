@@ -33,6 +33,7 @@ def getReplInput():
     openParens = 0
         
     def walk(inp):
+        nonlocal openParens
         for char in inp:
             if char == "(":
                 openParens += 1
