@@ -53,13 +53,15 @@ Unfinished...
 |>=      |Greater Than or Equal To | No |
 |<=      |Less Than or Equal To    | No |
 |        |**Declarations**         |    |    
-|set     |Set or declare a variable| Yes|
+|def     |Declare a variable       | No |
+|set     |Reassign a variable      | No |
 |        |**Control flow**         |    |
 |if      |If expression.           | No |
 |elif    |May follow an if expression| No |
 |else    |May follow an if or elif expression|No|
 |while   |While expression         |No  |
 |        |**Converters**           |    |
+|lambda  |Creates a lambda object  |No  |
 |list    |Return all parameters as a list| No |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
