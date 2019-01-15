@@ -105,8 +105,8 @@ class Interpreter:
 
         if name["value"] in self.variables.keys():
             self.variables[name["value"]] = self.evaluate(args[1])
-                             
-        raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
+        else:                    
+            raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
 
 
     # Name: '+'
