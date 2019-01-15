@@ -39,6 +39,7 @@ def getReplInput():
                 openParens += 1
             elif char == ")":
                 openParens -= 1
+        print(inp, openParens)
                 
     walk(inpu)
                 
