@@ -44,8 +44,10 @@ Unfinished...
 |        |**Declarations**         |    |    
 |set     |Set or declare a variable| Yes|
 |        |**Control flow**         |    |
-|if      |If passed a 'truthy' condition, evaluate the first parameter. Otherwise, evaluate the second.|No|
-|while   |While the condition passed is 'truthy', evaluate the first parameter. Otherwise, evaluate the second.|No|
+|if      |If expression.           | No |
+|elif    |May follow an if expression| No |
+|else    |May follow an if or elif expression|No|
+|while   |While expression         |No  |
 |        |**Converters**           |    |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
