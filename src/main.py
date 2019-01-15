@@ -28,11 +28,30 @@ def run(inp):
 
     interpreter.interpret(ast)
 
+def getReplInput():
+    inpu = str(input("solar > "))
+    openParens = 0
+        
+    def walk(inp):
+        for char in inp:
+            if char == "(":
+                openParens += 1
+            elif char == ")":
+                openParens -= 1
+                
+    walk(inpu)
+                
+    while openParens != 0:
+        inpu += str(input("solar ^ "))
+        walk(inpu)
+        
+    return inpu
                         
 def runRepl():
     while True:
         try:
-            run(str(input("solar > ")))
+            inp = getReplInput()
+            run(inp)
         except SolarError as error:
             print(error)
             print()
