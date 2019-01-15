@@ -41,6 +41,11 @@ Unfinished...
 |<       |Less Than                | Yes|
 |>=      |Greater Than or Equal To | No |
 |<=      |Less Than or Equal To    | No |
+|        |**Declarations**         |    |    
+|set     |Set or declare a variable| Yes|
+|        |**Control flow**         |    |
+|if      |If passed a 'truthy' condition, evaluate the first parameter. Otherwise, evaluate the second.|No|
+|while   |While the condition passed is 'truthy', evaluate the first parameter. Otherwise, evaluate the second.|No|
 |        |**Converters**           |    |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
@@ -50,11 +55,10 @@ Unfinished...
 |upper   |Convert to Uppercase     | Yes|
 |encode  |Convert Text to Unicode  | Yes|
 |decode  |Convert Unicode to Text  | Yes|
-|        |**I/O**           |    |
+|        |**I/O**                  |    |
 |put     |Print output             | Yes|
 |get     |Read a line of input from stdin| Yes |
-|set     |Set a variable           | Yes|
-|        |**Errors**        |     |
+|        |**Errors**               |    |
 |raise   |Raise a SolarError   | Yes |
 
 More coming soon...
