@@ -43,11 +43,11 @@ def getReplInput():
     walk(inpu)
                 
     while openParens != 0:
-        inp = str(input("solar ^ "))
+        inp = str(" " + input("solar ^ "))
         inpu += inp
         walk(inp)
         
-    return inpu.replace("\n", " ")
+    return inpu
      
         
 def runRepl():
