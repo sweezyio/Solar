@@ -1,0 +1,16 @@
+(set fizzBuzz 
+    (lambda (min max)
+        (set current min)
+        (while (<= current max)
+            (if (= (% current 15) 0)
+                (put "FizzBuzz")
+            ) (elif (= (% current 5) 0)
+                (put "Buzz")
+            ) (elif (= (% current 3) 0)
+                (put "Fizz")
+            ) (else (put current))
+        )
+    )
+)
+
+(fizzBuzz 1 20)
