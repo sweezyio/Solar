@@ -4,6 +4,8 @@
 # Licensed under the MIT Licence.
 # See https://github.com/Solar-language/Solar/blob/master/LICENSE.md
 
+from error import SolarError
+
 class Interpreter:
     def __init__(self):
         self.environment = {
@@ -25,7 +27,7 @@ class Interpreter:
         try:
             function = self.environment[functionName]
         except KeyError:
-            raise RuntimeError(f"Undefined function '{functionName}'.")
+            raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
 
         params = []
         for param in expression["params"]:

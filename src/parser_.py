@@ -4,6 +4,8 @@
 # Licensed under the MIT Licence.
 # See https://github.com/Solar-language/Solar/blob/master/LICENSE.md
 
+from error import SolarError
+
 class Parser():
     def __init__(self):
         self.tokens = []
@@ -30,7 +32,7 @@ class Parser():
         if token["type"] == "paren" and token["value"] == "(":
             return self.parseCall()
             
-        raise TypeError(f"Expected expression at '{token['value']}'.")
+        raise SolarError(f"Parse error: Expected expression at '{token['value']}'.")
            
                         
     def parseNumber(self):
@@ -53,15 +55,26 @@ class Parser():
                         
     def parseCall(self):
         self.current += 1
-        name = self.tokens[self.current]["value"]
+        
+        try:
+            name = self.tokens[self.current]["value"]
+        except IndexError:
+            raise SolarError("Parse error: Expected function name.")
+
+        if self.tokens[self.current]["type"] != "name":
+            raise SolarError("Parse error: Expected function name.")
+
         self.current += 1
 
         params = []
         
-        token = self.tokens[self.current]
-        while token["type"] != "paren" or (token["type"] == "paren" and token["value"] != ")"):
-            params.append(self.parseExpression())
+        try:
             token = self.tokens[self.current]
+            while token["type"] != "paren" or (token["type"] == "paren" and token["value"] != ")"):
+                params.append(self.parseExpression())
+                token = self.tokens[self.current]
+        except IndexError:
+            raise SolarError("Parse error: Expected ')' after function call.")
         
         # Eat the closing paren
         self.current += 1

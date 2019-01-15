@@ -6,31 +6,37 @@
 
 import sys
 
-import solarLexer
-import solarParser
-import solarInterpreter
+from lexer import Lexer
+from parser_ import Parser
+from interpreter import Interpreter
+
+from error import SolarError
         
     
 def run(inp):
-    tokens = solarLexer.Lexer().lex(inp)
-    ast = solarParser.Parser().parse(tokens)
+    tokens = Lexer().lex(inp)
+    ast = Parser().parse(tokens)
 
     print("--START AST--")
     print(ast)
     print("--END AST--\n")
 
-    solarInterpreter.Interpreter().interpret(ast)
+    Interpreter().interpret(ast)
 
                         
 def runRepl():
     while True:
         try:
             run(str(input("solar > ")))
+        except SolarError as error:
+            print(error)
+            print()
         except KeyboardInterrupt:
             print("\nQuitting...")
             sys.exit(1)
         except:
-            print("Error:", sys.exc_info()[1])
+            print("Internal error, raising exception:")
+            raise
 
                         
 def runFile(filename):
