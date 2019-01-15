@@ -25,7 +25,6 @@ def runRepl():
             sys.exit(1)
         except:
             print("Error:", sys.exc_info()[1])
-            raise
 
                         
 def runFile(filename):
