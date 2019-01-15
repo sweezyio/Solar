@@ -9,25 +9,25 @@ from error import SolarError
 class Interpreter:
     def __init__(self):
         self.functions = {
-            "+": lambda args: self.add(args),
-            "-": lambda args: self.subtract(args),
-            "*": lambda args: self.multiply(args),
-            "/": lambda args: self.divide(args),
-            "%": lambda args: self.modulo(args),
-            "int": lambda args: self.integer(args),
-            "float": lambda args: self.decimal(args),
-            "str": lambda args: self.string(args),
-            "put": lambda args: self.put(args),
-            "get": lambda args: self.get(args),
-            "=": lambda args: self.equals(args),
-            ">": lambda args: self.greater(args),
-            "<": lambda args: self.less(args),
-            "lower": lambda args: self.lower(args),
-            "upper": lambda args: self.upper(args),
-            "encode": lambda args: self.enc(args),
-            "decode": lambda args: self.dec(args),
-            "set": lambda args: self.setVariable(args),
-            "raise": lambda args: self.raiseError(args),
+            "+": lambda args: self.stdAdd(args),
+            "-": lambda args: self.stdSubtract(args),
+            "*": lambda args: self.stdMultiply(args),
+            "/": lambda args: self.stdDivide(args),
+            "%": lambda args: self.stdModulo(args),
+            "int": lambda args: self.stdInt(args),
+            "float": lambda args: self.stdFloat(args),
+            "str": lambda args: self.stdStr(args),
+            "put": lambda args: self.stdPut(args),
+            "get": lambda args: self.stdGet(args),
+            "=": lambda args: self.stdEquals(args),
+            ">": lambda args: self.stdGreater(args),
+            "<": lambda args: self.stdLess(args),
+            "lower": lambda args: self.stdLower(args),
+            "upper": lambda args: self.stdUpper(args),
+            "encode": lambda args: self.stdEncode(args),
+            "decode": lambda args: self.stdDecode(args),
+            "set": lambda args: self.stdSet(args),
+            "raise": lambda args: self.stdRaise(args),
         }
         self.variables = {}
 
@@ -75,7 +75,7 @@ class Interpreter:
     # --- Functions in environment --- #
 
     # Name: 'set'
-    def setVariable(self, args):
+    def stdSet(self, args):
         assertArgsLength(args, 2, "set")
 
         name = args[0]
@@ -87,55 +87,55 @@ class Interpreter:
 
 
     # Name: '+'
-    def add(self, args):
+    def stdAdd(self, args):
         assertArgsLength(args, 2, "+")
         return self.evaluate(args[0]) + self.evaluate(args[1])
 
   
     # Name: '-'
-    def subtract(self, args):
+    def stdSubtract(self, args):
         assertArgsLength(args, 2, "-")
         return self.evaluate(args[0]) - self.evaluate(args[1])
 
   
     # Name: '*'
-    def multiply(self, args):
+    def stdMultiply(self, args):
         assertArgsLength(args, 2, "*")
         return self.evaluate(args[0]) * self.evaluate(args[1])
 
   
     # Name: '/'
-    def divide(self, args):
+    def stdDivide(self, args):
         assertArgsLength(args, 2, "/")
         return self.evaluate(args[0]) / self.evaluate(args[1])
 
   
     # Name: '%'
-    def modulo(self, args):
+    def stdModulo(self, args):
         assertArgsLength(args, 2, "%")
         return self.evaluate(args[0]) % self.evaluate(args[1])
 
                         
     # Name: 'int'
-    def integer(self, args):
+    def stdInt(self, args):
         assertArgsLength(args, 1, "int")
         return int(self.evaluate(args[0]))
 
                         
     # Name: 'float'
-    def decimal(self, args):
+    def stdFloat(self, args):
         assertArgsLength(args, 1, "float")
         return float(self.evaluate(args[0]))
 
                         
     # Name: 'str'
-    def string(self, args):
+    def stdStr(self, args):
         assertArgsLength(args, 1, "str")
         return str(self.evaluate(args[0]))
 
   
     # Name: 'put'
-    def put(self, args):
+    def stdPut(self, args):
         assertArgsLength(args, 1, "put")
         val = self.evaluate(args[0])
         print(val)
@@ -143,43 +143,43 @@ class Interpreter:
     
     
     # Name: 'get'
-    def get(self, args):
+    def stdGet(self, args):
         assertArgsLength(args, 0, "get")
         return input()
 
     
     # Name: '='
-    def equals(self, args):
+    def stdEquals(self, args):
         assertArgsLength(args, 2, "=")
         return self.evaluate(args[0]) == self.evaluate(args[1])
 
     
     # Name: '>'
-    def greater(self, args):
+    def stdGreater(self, args):
         assertArgsLength(args, 2, ">")
         return self.evaluate(args[0]) > self.evaluate(args[1])
 
     
     # Name: '<'
-    def less(self, args):
+    def stdLess(self, args):
         assertArgsLength(args, 2, "<")
         return self.evaluate(args[0]) < self.evaluate(args[1])
 
     
     # Name: 'lower'
-    def lower(self, args):
+    def stdLower(self, args):
         assertArgsLength(args, 1, "lower")
         return self.evaluate(args[0]).lower()
 
     
     # Name: 'upper'
-    def upper(self, args):
+    def stdUpper(self, args):
         assertArgsLength(args, 1, "upper")
         return self.evaluate(args[0]).upper()
 
     
     # Name: 'encode'
-    def enc(self, args):
+    def stdEncode(self, args):
         assertArgsLength(args, 1, "encode")
         li = []
         for i in self.evaluate(args[0]):
@@ -188,7 +188,7 @@ class Interpreter:
 
     
     # Name: 'decode'
-    def dec(self, args):
+    def stdDecode(self, args):
         assertArgsLength(args, 1, "decode")
         if isdigit(args[0]):
             return chr(self.evaluate(args[0]))
@@ -197,7 +197,7 @@ class Interpreter:
           
         
     # Name: 'raise'
-    def raiseError(self, args):
+    def stdRaise(self, args):
         assertArgsLength(args, 1, "raise")
         raise SolarError(f"Error raised: {self.evaluate(args[0])}")
   
