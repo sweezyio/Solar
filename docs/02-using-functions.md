@@ -44,7 +44,8 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |decode  |Convert Unicode to Text  | Yes|
 |        |**I/O**           |    |
 |put     |Print output             | Yes|
-|get     |Print input              | No |
+|get     |Print input              | Yes|
+|def     |Define a variable        | Yes|
 |set     |Set a variable           | Yes|
 
 ### Functions In-Depth
@@ -404,23 +405,48 @@ Output:
 Hello, World! > 
 ```
 
-2. **set**
+3. **def**
 
-Sets a variable.
+Defines a variable. Note that you cannot redefine a variable already defined with `def` - but you can reassign its value using
+`set`.
 
-Syntax: `(get <value 1> <value 2>)`
+Syntax: `(def <value 1> <value 2 (optional)>)`
+
+If value 2 is not provided, the variable will have the value of `null` by default.
+
+Example:
+```
+(def x)
+(put x)
+
+(def y 32)
+(put y)
+```
+Output:
+```
+null
+32
+```
+
+4. **set**
+
+Assigns to a variable. Note that a variable must be defined with `def` before it is assigned to with `set`.
+
+Syntax: `(set <value 1> <value 2>)`
 
 Example:
 
 ```
-(set x "Hello, World!")
+(def x "Hello, world!")
+(put x)
+(set x "Goodbye, world!")
 (put x)
 ```
 
 Output:
 
 ```
-Hello, World! 
+Goodbye, world! 
 ```
 
 - The Solar Team
