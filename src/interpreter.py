@@ -274,12 +274,6 @@ class Interpreter:
         return str(self.evaluate(args[0]))
 
 
-    # Name: 'bool'
-    def stdStr(self, args):
-        assertArgsLength(args, 1, "bool")
-        return bool(self.evaluate(args[0]))
-
-
     # Name: 'put'
     def stdPut(self, args):
         assertArgsLength(args, 1, "put")
