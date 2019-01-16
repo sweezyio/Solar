@@ -19,6 +19,7 @@ class Interpreter:
             "float": lambda args: self.stdFloat(args),
             "str": lambda args: self.stdStr(args),
             "put": lambda args: self.stdPut(args),
+            "print": lambda args: self.stdPrint(args),
             "get": lambda args: self.stdGet(args),
             "=": lambda args: self.stdEquals(args),
             ">": lambda args: self.stdGreater(args),
@@ -168,6 +169,14 @@ class Interpreter:
         val = self.evaluate(args[0])
         print(val)
         return val
+                             
+                             
+    # Name: 'print'
+    def stdPrint(self, args):
+        assertArgsLength(args, 1, "print")
+        val = self.evaluate(args[0])
+        print(val, "")
+        return val             
     
     
     # Name: 'get'
