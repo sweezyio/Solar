@@ -52,8 +52,9 @@ def getReplInput():
         
 def runRepl():
     while True:
+        inp = getReplInput()
+        
         try:
-            inp = getReplInput()
             run(inp)
         except SolarError as error:
             print(error)
