@@ -6,9 +6,14 @@
 
 from error import SolarError
 
+class SolarLambda:
+    def __init__(self, params, body):
+        self.params = params
+        self.body = body
+
 class Interpreter:
     def __init__(self):
-        self.environment = {
+        self.environment = [{
             "+": lambda args: self.stdAdd(args),
             "-": lambda args: self.stdSubtract(args),
             "*": lambda args: self.stdMultiply(args),
@@ -32,17 +37,38 @@ class Interpreter:
             "def": lambda args: self.stdDef(args),
             "set": lambda args: self.stdSet(args),
             "raise": lambda args: self.stdRaise(args),
-        }
+        }]
+        self.scopeDepth = 0
 
 
     def getVariable(self, expression):
         name = expression["value"]
 
         try:
-            return self.environment[name]
+            for scope in reversed(self.environment)
+                return scope[name]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined variable {name}.")
 
+    
+    def callLambda(self, args, lambda_):
+        if len(args) != len(lambda_.params):
+            raise SolarError(f"Expected {len(lambda_.params)} args, but got {len(args)}.")
+            
+        lambdaScope = {}
+        
+        for index, param in enumerate(lambda_.params):
+            lambdaScope[param] = args[index]
+            
+        self.environment.append(lambdaScope)
+        self.scopeDepth += 1
+        
+        for expression in lambda_.body:
+            self.evaluate(expression)
+        
+        self.scopeDepth -= 1
+        self.environment.pop()
+        
                         
     def call(self, expression):
         functionName = expression["name"]
@@ -51,12 +77,7 @@ class Interpreter:
             function = self.environment[functionName]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
-
-        # A user-defined lambda
-        if type(function) is SolarLambda:
-            return function.call(expression["params"])
             
-        # A built in function
         return function(expression["params"])
 
                         
@@ -153,7 +174,7 @@ class Interpreter:
             raise SolarError(f"Function 'lambda' expected at least 1 args, but got {len(args)}.")
         
         if len(args) == 1:
-            return lambda: None
+            return lambda args_: None
         else:
             params = args[0]
             if params["type"] != "CallExpression":
@@ -173,7 +194,7 @@ class Interpreter:
             # The lambda's body is the remaining arguments.
             body = args
             
-            return SolarLambda(params, body)
+            return lambda args_: self.callLambda(args_, SolarLambda(params, body))
                              
                              
     # Name: 'list'
