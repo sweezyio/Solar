@@ -6,14 +6,20 @@
 
 from error import SolarError
 
+class SolarLambda:
+    def __init__(self, params, body):
+        self.params = params
+        self.body = body
+
 class Interpreter:
     def __init__(self):
-        self.environment = {
+        self.environment = [{
             "+": lambda args: self.stdAdd(args),
             "-": lambda args: self.stdSubtract(args),
             "*": lambda args: self.stdMultiply(args),
             "/": lambda args: self.stdDivide(args),
             "%": lambda args: self.stdModulo(args),
+            "lambda": lambda args: self.stdLambda(args),
             "list": lambda args: self.stdList(args),
             "int": lambda args: self.stdInt(args),
             "float": lambda args: self.stdFloat(args),
@@ -33,27 +39,50 @@ class Interpreter:
             "def": lambda args: self.stdDef(args),
             "set": lambda args: self.stdSet(args),
             "raise": lambda args: self.stdRaise(args),
-        }
+        }]
+        self.scopeDepth = 0
 
 
     def getVariable(self, expression):
         name = expression["value"]
 
-        try:
-            return self.environment[name]
-        except KeyError:
-            raise SolarError(f"Runtime error: Undefined variable {name}.")
+        for scope in reversed(self.environment):
+            if name in scope.keys():
+                return scope[name]
+        
+        raise SolarError(f"Runtime error: Undefined variable {name}.")
 
+    
+    def callLambda(self, args, lambda_):
+        if len(args) != len(lambda_.params):
+            raise SolarError(f"Expected {len(lambda_.params)} args, but got {len(args)}.")
+            
+        lambdaScope = {}
+        
+        for index, param in enumerate(lambda_.params):
+            lambdaScope[param] = self.evaluate(args[index])
+            
+        self.environment.append(lambdaScope)
+        self.scopeDepth += 1
+        
+        lastExpr = None
+        for expression in lambda_.body:
+            lastExpr = self.evaluate(expression)
+        
+        self.scopeDepth -= 1
+        self.environment.pop()
+        
+        return lastExpr
+        
                         
     def call(self, expression):
         functionName = expression["name"]
         
-        try:
-            function = self.environment[functionName]
-        except KeyError:
-            raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
-
-        return function(expression["params"])
+        for scope in reversed(self.environment):
+            if functionName in scope.keys():
+                return scope[functionName](expression["params"])
+        
+        raise SolarError(f"Runtime error: Undefined function {functionName}.")
 
                         
     def evaluate(self, expression):
@@ -91,10 +120,12 @@ class Interpreter:
             
         value = self.evaluate(args[1]) if len(args) == 2 else None
         
-        if name["value"] in self.environment.keys():
-            raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
+        for scope in reversed(self.environment):
+            if name["value"] in scope.keys():
+                raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
         
-        self.environment[name["value"]] = value
+        self.environment[self.scopeDepth][name["value"]] = value
+        return value
         
     
     # Name: 'set'
@@ -106,10 +137,13 @@ class Interpreter:
         if name["type"] != "VariableExpression":
             raise SolarError("Can only assign to variable names.")
 
-        if name["value"] in self.environment.keys():
-            self.environment[name["value"]] = self.evaluate(args[1])
-        else:                    
-            raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
+        for scope in reversed(self.environment):
+            if name["value"] in scope.keys():
+                val = self.evaluate(args[1])
+                scope[name["value"]] = val
+                return val
+                    
+        raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
 
 
     # Name: '+'
@@ -141,6 +175,41 @@ class Interpreter:
         assertArgsLength(args, 2, "%")
         return self.evaluate(args[0]) % self.evaluate(args[1])
 
+   
+    # Name: 'lambda'
+    def stdLambda(self, args):
+        # Must take at least 1 arg
+        if len(args) < 1:
+            raise SolarError(f"Function 'lambda' expected at least 1 args, but got {len(args)}.")
+        
+        if len(args) == 1:
+            return lambda args_: None
+        else:
+            params = args[0]
+            if params["type"] != "CallExpression":
+                raise SolarError("Expected lambda arguments.")
+            firstParam = params["name"]
+            params = params["params"]
+                         
+            for param in params:
+                if param["type"] != "VariableExpression":
+                    raise SolarError("Lambda arguments must be names, not values.")
+                         
+            # Now we just have a list of strings that are the names of the params.
+            params = [param["value"] for param in params]
+                         
+            # Prepend the first param that we captured earlier
+            if firstParam != "":
+                params = [firstParam] + params
+                   
+            # Slice off the first argument, we don't need it anymore
+            args = args[1:]
+            
+            # The lambda's body is the remaining arguments.
+            body = args
+            
+            return lambda args_: self.callLambda(args_, SolarLambda(params, body))
+                             
                              
     # Name: 'list'
     def stdList(self, args):
