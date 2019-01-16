@@ -80,7 +80,7 @@ class Interpreter:
             if functionName in scope.keys():
                 return scope[functionName](expression["params"])
         
-        raise SolarError(f"Runtime error: Undefined function {name}.")
+        raise SolarError(f"Runtime error: Undefined function {functionName}.")
 
                         
     def evaluate(self, expression):
