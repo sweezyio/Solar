@@ -66,10 +66,10 @@ class Parser():
         try:
             name = self.tokens[self.current]["value"]
         except IndexError:
-            raise SolarError("Parse error: Expected function name.")
+            name = ""
 
         # Only a 'name' token may be used as a function name
-        if self.tokens[self.current]["type"] != "name":
+        if name != "" and self.tokens[self.current]["type"] != "name":
             raise SolarError("Parse error: Expected function name.")
 
         self.current += 1
