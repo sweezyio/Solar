@@ -16,8 +16,11 @@ class Lexer():
     def lex(self, inp):
         self.inp = inp
         self.current = 0
-        while self.current < len(self.inp):
+        while self.current <= len(self.inp):
             self.skipWhitespace()
+            if self.current >= len(self.inp):
+                break
+                
             char = self.inp[self.current]
             
             # Single character tokens
