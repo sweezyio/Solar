@@ -74,8 +74,8 @@ class Interpreter:
         functionName = expression["name"]
         
         for scope in reversed(self.environment):
-            if name in scope.keys():
-                return scope[name](expression["params"])
+            if functionName in scope.keys():
+                return scope[functionName](expression["params"])
         
         raise SolarError(f"Runtime error: Undefined function {name}.")
 
