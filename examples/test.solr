@@ -1,4 +1,4 @@
-` While loops failing `
+` Has Been Tested (17/01/19) `
 `A test file to see if every component of the Solar Interpreter is working.`
 (def fizzBuzz 
     (lambda (min max)
@@ -40,3 +40,4 @@ Ah
     (set x (+ x 1))
 )
 (raise "We are Done!!!!")
+`If you get an error at the end that says "We are Done!!!!", then everything worked.`
