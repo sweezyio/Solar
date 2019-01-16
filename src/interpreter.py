@@ -390,7 +390,6 @@ class Interpreter:
         body = SolarLambda([], args[1:])
 
         if self.lastIfStatementWasTrue:
-            self.lastIfStatementWasTrue = False
             return None
 
         if bool(self.evaluate(condition)):
