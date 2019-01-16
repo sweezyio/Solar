@@ -379,8 +379,8 @@ Syntax: `(encode <value 1>)`
 Example:
 
 ```
-(put (decode 72))
-(put (decode (list 72 101 108)))
+(put (encode 72))
+(put (encode (list 72 101 108)))
 ```
 
 Output:
