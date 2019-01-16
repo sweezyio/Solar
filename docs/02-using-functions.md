@@ -46,6 +46,7 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |        |**I/O**           |    |
 |put     |Print output             | Yes|
 |get     |Print input              | Yes|
+|print   |Print input without new line| Yes|
 |def     |Define a variable        | Yes|
 |set     |Set a variable           | Yes|
 
