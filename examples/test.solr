@@ -39,7 +39,7 @@ Ah
 (def x)
 (set x 0)
 (while (= x 0) 
-    (fizzbuzz 6 6)
+    (fizzBuzz 6 6)
     (set x (+ x 1))
 )
 (raise "We are Done!!!!")

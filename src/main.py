@@ -72,7 +72,7 @@ def runFile(filename):
         try:
             run(sourceFile.read())
         except SolarError as Error:
-            print(error)
+            print(Error)
             print()
             sys.exit(1)
 
