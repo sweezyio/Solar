@@ -35,6 +35,7 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |>=      |Greater Than or Equal To | No |
 |<=      |Less Than or Equal To    | No |
 |        |**Converters**           |    |
+|list    |Convert to List          | No |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
 |float   |Convert to Float         | Yes|
@@ -235,7 +236,26 @@ Output:
 False
 ```
 #### Converter Functions
-1. **int**
+1. **list**
+
+Takes an unlimited number of parameters and creates a list containing those parameters.
+
+Syntax: `(list <unlimited number of params(optional)>)`
+
+If passed no parameters, it will simply return an empty list.
+
+Example:
+```
+(put (list))
+(put (list 1 2 "foo" true))
+```
+Output:
+```
+[]
+[1, 2, foo, true]
+```
+
+2. **int**
 
 Converts a value to an int.
 
@@ -255,7 +275,7 @@ Output:
 16
 ```
 
-2. **str**
+3. **str**
 
 Converts a value to an String.
 
@@ -275,7 +295,7 @@ Output:
 246
 ```
 
-3. **float**
+4. **float**
 
 Converts a value to a float.
 
@@ -295,7 +315,7 @@ Output:
 16.2
 ```
 
-4. **lower**
+5. **lower**
 
 Converts a string to lowercase.
 
@@ -313,7 +333,7 @@ Output:
 hello, world!
 ```
 
-5. **upper**
+6. **upper**
 
 Converts a string to lowercase.
 
@@ -331,7 +351,7 @@ Output:
 HELLO, WORLD!
 ```
 
-6. **encode**
+7. **encode**
 
 Converts a string to Unicode base 10.
 
@@ -349,9 +369,9 @@ Output:
 [72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33]
 ```
 
-6. **decode**
+8. **decode**
 
-Converts a unicode base 10 number to a char.
+Converts a unicode base 10 number to a string.
 
 Syntax: `(decode <value 1>)`
 
@@ -359,12 +379,14 @@ Example:
 
 ```
 (put (decode 72))
+(put (decode (list 72 101 108)))
 ```
 
 Output:
 
 ```
 H
+Hel
 ```
 
 #### I/O Functions
