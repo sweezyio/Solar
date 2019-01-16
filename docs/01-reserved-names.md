@@ -47,6 +47,7 @@ Unfinished...
 |/       |Divide                   | Yes|
 |%       |Modulo                   | Yes|
 |=       |Equal                    | Yes|
+|!=      |Not equal                | Yes|
 |>       |Greater Than             | Yes|
 |<       |Less Than                | Yes|
 |>=      |Greater Than or Equal To | Yes |
@@ -55,10 +56,10 @@ Unfinished...
 |def     |Declare a variable       | Yes |
 |set     |Reassign a variable      | Yes |
 |        |**Control flow**         |    |
-|if      |If expression.           | No |
-|elif    |May follow an if expression| No |
-|else    |May follow an if or elif expression|No|
-|while   |While expression         |No  |
+|if      |If expression.           | Yes |
+|elif    |May follow an if expression| Yes |
+|else    |May follow an if or elif expression|Yes|
+|while   |While expression         |Yes  |
 |        |**Converters**           |    |
 |lambda  |Creates a lambda object  |Yes  |
 |list    |Return all parameters as a list| Yes |
