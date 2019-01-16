@@ -20,7 +20,7 @@ Before contributing, please make sure you have read [The Contribution Guidelines
 ## What is Solar's file extension
 Solar's file extension is `.solr`.
 
-### SimpleBinary
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Owner of this orginisation
+### SimpleBinary and Dandigit
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Owners of this orginisation
 
    
