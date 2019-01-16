@@ -189,11 +189,12 @@ class Interpreter:
             for param in params:
                 if param["type"] != "VariableExpression":
                     raise SolarError("Lambda arguments must be names, not values.")
-            
-            params = [firstParam] + params
                          
             # Now we just have a list of strings that are the names of the params.
             params = [param["value"] for param in params]
+                         
+            # Prepend the first param that we captured earlier
+            params = [firstParam] + params
                    
             # Slice off the first argument, we don't need it anymore
             args = args[1:]
