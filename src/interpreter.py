@@ -183,7 +183,7 @@ class Interpreter:
             params = args[0]
             if params["type"] != "CallExpression":
                 raise SolarError("Expected lambda arguments.")
-            params = [params["name"]].join(params["params"])
+            params = [params["name"]] + params["params"]
                              
             for param in params:
                 if param["type"] != "VariableExpression":
