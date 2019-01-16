@@ -16,9 +16,10 @@ Solar is a language designed for working out equations, as it works out the func
 
 ### Naming Rules 
 
-Solar is case-**in**sensitive, meaning if I had a variable called `Hi`, it would be the same as `hi`, but even though it is case-insensitive, you should probably stick to the following naming rules, though you do not have to:
+Solar is case-sensitive, meaning if I had a variable called `Hi`, it would **not** be the same as `hi`.
+The naming rules below are recommended for consistency, but not required:
 
-- Use Camelcase for Variables. Eg `veryGood`
+- Use camelCase for Variables. Eg `veryGood`
 - If you have defined a variable as `veryGood`, avoid prining the variable as `VERYGOOD`
 - Avoid using words that don't make sense as variable names. Eg `cnysT` (With the exception of `a` to `z` and variables that begin with `$`)
 
