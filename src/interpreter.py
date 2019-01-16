@@ -25,6 +25,7 @@ class Interpreter:
             "append": lambda args: self.stdAppend(args),
             "int": lambda args: self.stdInt(args),
             "float": lambda args: self.stdFloat(args),
+            "bool": lambda args: self.stdBool(args),
             "str": lambda args: self.stdStr(args),
             "put": lambda args: self.stdPut(args),
             "print": lambda args: self.stdPrint(args),
@@ -266,7 +267,13 @@ class Interpreter:
         assertArgsLength(args, 1, "str")
         return str(self.evaluate(args[0]))
 
-  
+
+    # Name: 'bool'
+    def stdStr(self, args):
+        assertArgsLength(args, 1, "bool")
+        return bool(self.evaluate(args[0]))
+
+
     # Name: 'put'
     def stdPut(self, args):
         assertArgsLength(args, 1, "put")
