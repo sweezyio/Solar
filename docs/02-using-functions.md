@@ -32,8 +32,8 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |=       |Equal                    | Yes|
 |>       |Greater Than             | Yes|
 |<       |Less Than                | Yes|
-|>=      |Greater Than or Equal To | No |
-|<=      |Less Than or Equal To    | No |
+|>=      |Greater Than or Equal To | Yes|
+|<=      |Less Than or Equal To    | Yes|
 |        |**Converters**           |    |
 |list    |Convert to List          | No |
 |int     |Convert to Integer       | Yes|
