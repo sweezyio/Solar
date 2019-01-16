@@ -6,7 +6,7 @@
             (put "Hi")
         ) (elif (> min max)
             (put "no")
-        ) (else
+        ) (else 
             (put "hi")
         )
     )
