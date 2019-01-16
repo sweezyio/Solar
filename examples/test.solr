@@ -2,7 +2,7 @@
 `A test file to see if every component of the Solar Interpreter is working.`
 (def fizzBuzz 
     (lambda (min max)
-        (if (= min max)
+        (if (bool (= min max))
             (put "Hi")
         ) (elif (> min max)
             (put "no")
