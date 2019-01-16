@@ -24,6 +24,8 @@ class Interpreter:
             "=": lambda args: self.stdEquals(args),
             ">": lambda args: self.stdGreater(args),
             "<": lambda args: self.stdLess(args),
+            ">=": lambda args: self.stdGreaterOrEquals(args),
+            "<=": lambda args: self.stdLessOrEquals(args),
             "lower": lambda args: self.stdLower(args),
             "upper": lambda args: self.stdUpper(args),
             "encode": lambda args: self.stdEncode(args),
@@ -204,7 +206,19 @@ class Interpreter:
         assertArgsLength(args, 2, "<")
         return self.evaluate(args[0]) < self.evaluate(args[1])
 
+
+    # Name: '>='
+    def stdGreaterOrEquals(self, args):
+        assertArgsLength(args, 2, ">=")
+        return self.evaluate(args[0]) >= self.evaluate(args[1])
+
+
+    # Name: '<='
+    def stdLessOrEquals(self, args):
+        assertArgsLength(args, 2, "<=")
+        return self.evaluate(args[0]) <= self.evaluate(args[1])
     
+
     # Name: 'lower'
     def stdLower(self, args):
         assertArgsLength(args, 1, "lower")
