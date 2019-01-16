@@ -13,6 +13,9 @@
 )
 (def operators (list (+ 6 4) (- 6 4) (* 6 4) (/ 6 4) (% 6 4) (= 6 4) (!= 6 4) (> 6 4) (< 6 4) (>= 6 4) (<= 6 4)))   
 (print operators)
+(print (index operators 1))
+(append operators "Hello, 42!")
+(print operators)
 (set operators "Hello")
 (put operators)                   
 
