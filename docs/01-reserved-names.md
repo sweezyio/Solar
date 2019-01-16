@@ -55,6 +55,8 @@ Unfinished...
 |        |**Variables**         |    |    
 |def     |Declare a variable       | Yes |
 |set     |Reassign a variable      | Yes |
+|append  |Append to a list.        | Yes |
+|index   |Get the *n*th value in a list| Yes |
 |        |**Control flow**         |    |
 |if      |If expression.           | Yes |
 |elif    |May follow an if expression| Yes |
