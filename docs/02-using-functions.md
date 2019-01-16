@@ -1,4 +1,4 @@
-﻿![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/Solar-Logo.png?raw=true)
+﻿![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
 
 # Solar Docs - Using Functions
 
