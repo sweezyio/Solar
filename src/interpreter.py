@@ -63,11 +63,14 @@ class Interpreter:
         self.environment.append(lambdaScope)
         self.scopeDepth += 1
         
+        lastExpr = None
         for expression in lambda_.body:
-            self.evaluate(expression)
+            expr = self.evaluate(expression)
         
         self.scopeDepth -= 1
         self.environment.pop()
+        
+        return lastExpr
         
                         
     def call(self, expression):
