@@ -261,6 +261,12 @@ class Interpreter:
         assertArgsLength(args, 1, "float")
         return float(self.evaluate(args[0]))
 
+
+    # Name: 'bool'
+    def stdBool(self, args):
+        assertArgsLength(args, 1, "bool")
+        return bool(self.evaluate(args[0]))
+
                         
     # Name: 'str'
     def stdStr(self, args):
