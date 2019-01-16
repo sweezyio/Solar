@@ -352,16 +352,16 @@ Output:
 HELLO, WORLD!
 ```
 
-7. **encode**
+7. **decode**
 
-Converts a string to Unicode base 10.
+Converts a string to a list of bytes.
 
-Syntax: `(encode <value 1>)`
+Syntax: `(decode <value 1>)`
 
 Example:
 
 ```
-(put (encode "Hello, World!"))
+(put (decode "Hello, World!"))
 ```
 
 Output:
@@ -370,11 +370,11 @@ Output:
 [72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33]
 ```
 
-8. **decode**
+8. **encode**
 
-Converts a unicode base 10 number to a string.
+Converts a list of bytes to a Unicode string.
 
-Syntax: `(decode <value 1>)`
+Syntax: `(encode <value 1>)`
 
 Example:
 
