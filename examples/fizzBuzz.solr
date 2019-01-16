@@ -9,6 +9,8 @@
             ) (elif (= (% current 3) 0)
                 (print "Fizz")
             ) (else (print current))
+            
+            (set current (+ current 1))
         )
     )
 )
