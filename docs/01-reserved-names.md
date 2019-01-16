@@ -60,8 +60,8 @@ Unfinished...
 |else    |May follow an if or elif expression|No|
 |while   |While expression         |No  |
 |        |**Converters**           |    |
-|lambda  |Creates a lambda object  |No  |
-|list    |Return all parameters as a list| No |
+|lambda  |Creates a lambda object  |Yes  |
+|list    |Return all parameters as a list| Yes |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
 |float   |Convert to Float         | Yes|
