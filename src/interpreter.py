@@ -45,7 +45,7 @@ class Interpreter:
         name = expression["value"]
 
         try:
-            for scope in reversed(self.environment)
+            for scope in reversed(self.environment):
                 return scope[name]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined variable {name}.")
