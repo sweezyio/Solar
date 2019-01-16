@@ -197,7 +197,8 @@ class Interpreter:
             params = [param["value"] for param in params]
                          
             # Prepend the first param that we captured earlier
-            params = [firstParam] + params
+            if firstParam != "":
+                params = [firstParam] + params
                    
             # Slice off the first argument, we don't need it anymore
             args = args[1:]
