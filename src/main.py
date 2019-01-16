@@ -69,7 +69,12 @@ def runRepl():
                         
 def runFile(filename):
     with open(filename, "r") as sourceFile:
-        run(sourceFile.read())
+        try:
+            run(sourceFile.read())
+        except SolarError as Error:
+            print(error)
+            print()
+            sys.exit(1)
 
                         
 def main():
