@@ -1,0 +1,42 @@
+` While loops failing `
+`A test file to see if every component of the Solar Interpreter is working.`
+(def fizzBuzz 
+    (lambda (min max)
+        (if (= min max)
+            (put "Hi")
+        ) (elif (> min max)
+            (put "no")
+        ) (else
+            (put "hi")
+        )
+    )
+)
+(def operators (list (+ 6 4) (- 6 4) (* 6 4) (/ 6 4) (% 6 4) (= 6 4) (!= 6 4) (> 6 4) (< 6 4) (>= 6 4) (<= 6 4)))   
+(print operators)
+(set operators "Hello")
+(put operators)                   
+
+(print (+ 1 1))
+(print (+ (str 1) (str 1)))
+(print (+ (int (str 1)) (int (str 1))))     
+(print (+ "1.4" "1"))
+(print (+ (float "1.4") (float "1")))
+
+(def hawk (get "Hiw > "))
+(print hawk)
+(print (upper hawk))
+(print (lower hawk))
+(print (encode 42))
+(print (decode "*"))    
+` Random Comment to test
+blah blah
+beenl
+Ah
+`
+(def x)
+(set x 0)
+(while (= x 0) 
+    (fizzbuzz 6 6)
+    (set x (+ x 1))
+)
+(raise "We are Done!!!!")

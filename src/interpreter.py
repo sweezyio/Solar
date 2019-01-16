@@ -271,7 +271,7 @@ class Interpreter:
     def stdPut(self, args):
         assertArgsLength(args, 1, "put")
         val = self.evaluate(args[0])
-        print(val)
+        print(val, end="")
         return val
                              
                              
@@ -279,7 +279,7 @@ class Interpreter:
     def stdPrint(self, args):
         assertArgsLength(args, 1, "print")
         val = self.evaluate(args[0])
-        print(val, "")
+        print(val)
         return val             
     
     
@@ -347,7 +347,7 @@ class Interpreter:
     def stdDecode(self, args):
         assertArgsLength(args, 1, "decode")
         li = []
-        for i in self.evaluate(args[0]):
+        for i in str(self.evaluate(args[0])):
             li.append(ord(i))
         return li
           
