@@ -11,7 +11,7 @@ Eg.
 ## Hello World in Solar
 ```
 ` Comments in Solar `
-(put "Hello, World")
+(print "Hello, World")
 ```
 More in [Examples](/examples)
 ## Contributing
