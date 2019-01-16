@@ -166,8 +166,10 @@ class Interpreter:
     
     # Name: 'get'
     def stdGet(self, args):
-        assertArgsLength(args, 0, "get")
-        return input()
+        # May either have 0 or 1 args
+        if len(args) > 1:
+            raise SolarError(f"Function 'get' expected 0 or 1 args, but got {len(args)}.")
+        return input(self.evaluate(args[0])) if len(args) == 1 else input()
 
     
     # Name: '='
