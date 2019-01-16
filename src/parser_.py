@@ -70,6 +70,7 @@ class Parser():
 
         if self.tokens[self.current]["type"] == "paren" and self.tokens[self.current]["value"] == ")":
             name = ""
+            self.current -= 1
                          
         # Only a 'name' token may be used as a function name
         if name != "" and self.tokens[self.current]["type"] != "name":
