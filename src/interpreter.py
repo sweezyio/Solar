@@ -73,12 +73,11 @@ class Interpreter:
     def call(self, expression):
         functionName = expression["name"]
         
-        try:
-            function = self.getVariable(functionName)
-        except SolarError:
-            raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
-            
-        return function(expression["params"])
+        for scope in reversed(self.environment):
+            if name in scope.keys():
+                return scope[name](expression["params"])
+        
+        raise SolarError(f"Runtime error: Undefined function {name}.")
 
                         
     def evaluate(self, expression):
