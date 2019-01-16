@@ -22,9 +22,11 @@ Solar is case-**in**sensitive, meaning if I had a variable called `Hi`, it would
 - If you have defined a variable as `veryGood`, avoid prining the variable as `VERYGOOD`
 - Avoid using words that don't make sense as variable names. Eg `cnysT` (With the exception of `a` to `z` and variables that begin with `$`)
 
-List of Characters you can use in variable names: QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm$ __+-><=*/%__
+List of Characters you can use in variable names: QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm$ __&#42;&#47;&#43;&#45;&#37;&#60;&#62;&#61;__
 
 __Bold Characters__: Don't use these in single letter variables eg. `>`
 
 ## Why Solar?
 
+Incomplete...
+- The Solar Team
