@@ -49,8 +49,8 @@ Unfinished...
 |=       |Equal                    | Yes|
 |>       |Greater Than             | Yes|
 |<       |Less Than                | Yes|
-|>=      |Greater Than or Equal To | No |
-|<=      |Less Than or Equal To    | No |
+|>=      |Greater Than or Equal To | Yes |
+|<=      |Less Than or Equal To    | Yes|
 |        |**Variables**         |    |    
 |def     |Declare a variable       | Yes |
 |set     |Reassign a variable      | Yes |
@@ -71,7 +71,8 @@ Unfinished...
 |encode  |Convert Text to Unicode  | Yes|
 |decode  |Convert Unicode to Text  | Yes|
 |        |**I/O**                  |    |
-|put     |Print output             | Yes|
+|put     |Print output without new line            | Yes|
+|print     |Print output             | Yes|
 |get     |Read a line of input from stdin| Yes |
 |        |**Errors**               |    |
 |raise   |Raise a SolarError   | Yes |
