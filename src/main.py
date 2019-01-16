@@ -16,10 +16,10 @@ from error import SolarError
 interpreter = Interpreter()
 
 
-def run(inp):
+def run(inp, mode):
     global interpreter
 
-    tokens = Lexer().lex(inp)
+    tokens = Lexer().lex(inp, mode)
     ast = Parser().parse(tokens)
 
     print("--START AST--")
@@ -54,7 +54,7 @@ def runRepl():
     while True:
         try:
             inp = getReplInput()
-            run(inp)
+            run(inp, 0)
         except SolarError as error:
             print(error)
             print()
@@ -68,7 +68,7 @@ def runRepl():
                         
 def runFile(filename):
     with open(filename) as sourceFile:
-        run(sourceFile.read())
+        run(sourceFile.read(), 1)
 
                         
 def main():
