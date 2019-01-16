@@ -1,0 +1,10 @@
+(def fib (lambda (n)
+    (def ret)
+    (if (<= n 1)
+        (set ret n)
+    ) (else
+        (set ret (+ (fib (- n 1)) (fib (- n 2))))
+    )
+    ret
+)
+        
