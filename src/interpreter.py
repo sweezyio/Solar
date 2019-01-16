@@ -65,7 +65,7 @@ class Interpreter:
         
         lastExpr = None
         for expression in lambda_.body:
-            expr = self.evaluate(expression)
+            lastExpr = self.evaluate(expression)
         
         self.scopeDepth -= 1
         self.environment.pop()
