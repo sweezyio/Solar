@@ -394,7 +394,7 @@ Hel
 
 1. **put**
 
-Prints a value
+Prints a value without a newline
 
 Syntax: `(put <value 1>)`
 
@@ -410,9 +410,26 @@ Output:
 Hello, World!
 ```
 
-2. **get**
+2. **print**:
 
-Gets the next line of input.
+Prints a value, plus a newline
+
+Syntax: `(print <value 1>)`
+
+Example:
+```
+(print "foo")
+(print "bar")
+```
+Output:
+```
+foo
+bar
+```
+
+3. **get**
+
+Gets a line of input.
 
 Syntax: `(get <value 1 (optional)>)`
 
@@ -428,7 +445,7 @@ Output:
 Hello, World! > 
 ```
 
-3. **def**
+4. **def**
 
 Defines a variable. Note that you cannot redefine a variable already defined with `def` - but you can reassign its value using
 `set`.
@@ -451,7 +468,7 @@ null
 32
 ```
 
-4. **set**
+5. **set**
 
 Assigns to a variable. Note that a variable must be defined with `def` before it is assigned to with `set`.
 
