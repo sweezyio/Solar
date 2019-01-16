@@ -68,9 +68,7 @@ def runRepl():
                         
 def runFile(filename):
     with open(filename, "r") as sourceFile:
-        inp = sourceFile.read()
-        print(inp)
-        run(inp)
+        run(sourceFile.read())
 
                         
 def main():

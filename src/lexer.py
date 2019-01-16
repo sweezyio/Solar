@@ -13,11 +13,14 @@ class Lexer():
         self.inp = ""
         
         
-    def lex(self, inp):
+    def lex(self, inp, mode):
         self.inp = inp
+        self.mode = mode
         self.current = 0
+
         while self.current <= len(self.inp):
             self.skipWhitespace()
+            
             if self.current >= len(self.inp):
                 break
                 
