@@ -22,7 +22,7 @@ The naming rules below are recommended for consistency, but not required:
 - Use camelCase for Variables. Eg `veryGood`
 - Avoid using words that don't make sense as variable names. Eg `cnysT` (With the exception of `a` to `z` and variables that begin with `$`)
 
-List of Characters you can use in variable names: QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm$ `>=<+-/*%`
+List of Characters you can use in variable names: QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm$ `!>=<+-/*%`
 
 `Code Characters`: Don't use these in single letter variables eg. `>`
 
