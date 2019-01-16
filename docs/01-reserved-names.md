@@ -1,4 +1,4 @@
-﻿![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
+![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
 
 # Solar Docs - Reserved Names
 
@@ -66,7 +66,7 @@ Unfinished...
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
 |float   |Convert to Float         | Yes|
-|bool    |Convert to Bool         | No|
+|bool    |Convert to Bool         | Yes|
 |lower   |Convert to Lowercase     | Yes|
 |upper   |Convert to Uppercase     | Yes|
 |encode  |Convert Text to Unicode  | Yes|
