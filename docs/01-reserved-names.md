@@ -20,14 +20,13 @@ In the topic of reserved names, we will split it up into two parts: Reserved Var
 
 ### Keywords
 These reserved names below are neither functions nor variables; rather they are keywords built in to the language:
-```
 
 | Name   | Usage                   | Implemented? |
 |:------:|:-----------------------:|:------------:|
 |true|True boolean value|Yes|
 |false|False boolean value|Yes|
 |null|Null value|Yes|
-```
+
 
 ### Reserved Variable Names 
 
