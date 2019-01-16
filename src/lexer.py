@@ -13,7 +13,7 @@ class Lexer():
         self.inp = ""
         
         
-    def lex(self, inp, mode):
+    def lex(self, inp):
         self.inp = inp
         self.mode = mode
         self.current = 0
