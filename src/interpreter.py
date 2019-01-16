@@ -117,10 +117,12 @@ class Interpreter:
             
         value = self.evaluate(args[1]) if len(args) == 2 else None
         
-        if name["value"] in self.environment.keys():
-            raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
+        for scope in reversed(self.environment):
+            if name["value"] in scope.keys():
+                raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
         
-        self.environment[name["value"]] = value
+        self.environment[self.scopeDepth][name["value"]] = value
+        return value
         
     
     # Name: 'set'
@@ -132,10 +134,13 @@ class Interpreter:
         if name["type"] != "VariableExpression":
             raise SolarError("Can only assign to variable names.")
 
-        if name["value"] in self.environment.keys():
-            self.environment[name["value"]] = self.evaluate(args[1])
-        else:                    
-            raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
+        for scope in reversed(self.environment):
+            if name["value"] in scope.keys():
+                val = self.evaluate(args[1])
+                scope[name["value"]] = val
+                return val
+                    
+        raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
 
 
     # Name: '+'
