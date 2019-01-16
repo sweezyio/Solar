@@ -1,10 +1,10 @@
 ` Has been tested (16/01/19) `
 (def fib
     (lambda (n)
-   	(def nums (list 0 1))
-	(if (= 1 n) (set nums (list 0))
+   	    (def nums (list 0 1))
+	    (if (= 1 n) (set nums (list 0)))
 	
-	(def c 2)	
+	    (def c 2)	
 
         (while (<= c n)
             (append nums (+ (index nums (- c 1)) (index nums (- c 2))))
