@@ -39,8 +39,14 @@ class Interpreter:
             "def": lambda args: self.stdDef(args),
             "set": lambda args: self.stdSet(args),
             "raise": lambda args: self.stdRaise(args),
+            "if": lambda args: self.stdIf(args),
+            "elif": lambda args: self.stdElif(args),
+            "else": lambda args: self.stdElse(args),
+            "while": lambda args: self.stdWhile(args),
         }]
         self.scopeDepth = 0
+        self.lastExpr = None
+        self.lastIfStatementWasTrue = False
 
 
     def getVariable(self, expression):
@@ -92,13 +98,18 @@ class Interpreter:
                 typ == "StringLiteral" or
                 typ == "BoolLiteral" or
                 typ == "NullLiteral"):
+            self.lastExpr = expression
             return expression["value"]
         
         elif typ == "VariableExpression":
-            return self.getVariable(expression)
+            expr = self.getVariable(expression)
+            self.lastExpr = expression
+            return expr
         
         elif typ == "CallExpression":
-            return self.call(expression)
+            expr = self.call(expression)
+            self.lastExpr = expression
+            return expr
 
     def interpret(self, program):
         for expression in program["body"]:
@@ -323,6 +334,85 @@ class Interpreter:
     def stdRaise(self, args):
         assertArgsLength(args, 1, "raise")
         raise SolarError(f"Error raised: {self.evaluate(args[0])}")
+
+
+    # Name: 'if'
+    def stdIf(self, args):
+        # Must have 2 or more args
+        if len(args) < 2:
+            raise SolarError(f"Function 'if' expected 2 or more args, but got {len(args)}.")
+        
+        condition = args[0]
+
+        # Represent the body as a lambda so we can call it later
+        body = SolarLambda([], args[1:])
+
+        if bool(self.evaluate(condition)):
+            self.lastIfStatementWasTrue = True
+            return self.callLambda([], body)
+
+        self.lastIfStatementWasTrue = False
+        return None
+
+
+    # Name: 'elif'
+    def stdElif(self, args):
+        # Must have 2 or more args
+        if len(args) < 2:
+            raise SolarError(f"Function 'elif' expected 2 or more args, but got {len(args)}.")
+        
+        if not (self.lastExpr["type"] == "CallExpression" and (self.lastExpr["name"] == "if" or self.lastExpr["name"] == "elif")):
+            raise SolarError(f"Elif is not allowed here.")
+
+        condition = args[0]
+        body = SolarLambda([], args[1:])
+
+        if self.lastIfStatementWasTrue:
+            self.lastIfStatementWasTrue = False
+            return None
+
+        if bool(self.evaluate(condition)):
+            self.lastIfStatementWasTrue = True
+            return self.callLambda([], body)
+        
+        self.lastIfStatementWasTrue = False
+        return None
+    
+    
+    # Name: 'else'
+    def stdElse(self, args):
+        # Must have at least 1 arg
+        if len(args) < 1:
+            raise SolarError(f"Function 'else' expected 1 or more args, but got {len(args)}.")
+
+        if not (self.lastExpr["type"] == "CallExpression" and (self.lastExpr["name"] == "if" or self.lastExpr["name"] == "elif")):
+            raise SolarError(f"Else is not allowed here.")
+
+        if self.lastIfStatementWasTrue:
+            return None
+
+        body = SolarLambda([], args)
+        return self.callLambda([], body)
+
+
+    # Name: 'while'
+    def stdWhile(self, args):
+        # Must have 2 or more args
+        if len(args) < 2:
+            raise SolarError(f"Function 'while' expected 2 or more args, but got {len(args)}.")
+        
+        condition = args[0]
+
+        # Represent the body as a lambda so we can call it later
+        body = SolarLambda([], args[1:])
+
+        ret = None
+
+        while bool(self.evaluate(condition)):
+            ret = self.callLambda([], body)
+        
+        return ret
+
   
 # --- End functions in environment --- #
 
