@@ -1,3 +1,4 @@
+` Has been tested (16/01/19) `
 (def fib
     (lambda (n)
         (def nums (list 0 1))
