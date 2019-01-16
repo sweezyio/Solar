@@ -20,12 +20,11 @@ Solar is case-sensitive, meaning if I had a variable called `Hi`, it would **not
 The naming rules below are recommended for consistency, but not required:
 
 - Use camelCase for Variables. Eg `veryGood`
-- If you have defined a variable as `veryGood`, avoid prining the variable as `VERYGOOD`
 - Avoid using words that don't make sense as variable names. Eg `cnysT` (With the exception of `a` to `z` and variables that begin with `$`)
 
-List of Characters you can use in variable names: QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm$ ~&#42;&#47;&#43;&#45;&#37;&#60;&#62;&#61;~
+List of Characters you can use in variable names: QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm$ `>=<+-/*%`
 
-__Bold Characters__: Don't use these in single letter variables eg. `>`
+`Code Characters`: Don't use these in single letter variables eg. `>`
 
 ## Why Solar?
 
