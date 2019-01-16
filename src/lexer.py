@@ -67,14 +67,14 @@ class Lexer():
                 continue
             
             if self.inp[self.current] == '`':
-                current += 1
+                self.current += 1
                 try:
                     while self.inp[self.current] != '`':
-                        current += 1
+                        self.current += 1
                 except IndexError:
                     raise SolarError("Lexical error: Unterminated comment.")
                 # Consume the closing backtick
-                current += 1
+                self.current += 1
                 continue
                 
             # We didn't find whitespace
