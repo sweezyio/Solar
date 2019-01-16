@@ -14,11 +14,11 @@ class Interpreter:
             "*": lambda args: self.stdMultiply(args),
             "/": lambda args: self.stdDivide(args),
             "%": lambda args: self.stdModulo(args),
+            "list": lambda args: self.stdList(args),
             "int": lambda args: self.stdInt(args),
             "float": lambda args: self.stdFloat(args),
             "str": lambda args: self.stdStr(args),
             "put": lambda args: self.stdPut(args),
-            "print": lambda args: self.stdPrint(args),
             "get": lambda args: self.stdGet(args),
             "=": lambda args: self.stdEquals(args),
             ">": lambda args: self.stdGreater(args),
@@ -138,6 +138,11 @@ class Interpreter:
         assertArgsLength(args, 2, "%")
         return self.evaluate(args[0]) % self.evaluate(args[1])
 
+                             
+    # Name: 'list'
+    def stdList(self, args):
+        return [self.evaluate(arg) for arg in args]
+                             
                         
     # Name: 'int'
     def stdInt(self, args):
@@ -164,15 +169,7 @@ class Interpreter:
         print(val)
         return val
     
-
-    # Name: 'print'
-    def stdPrint(self, args):
-        assertArgsLength(args, 1, "put")
-        val = self.evaluate(args[0])
-        print(val, end="")
-        return val
     
-
     # Name: 'get'
     def stdGet(self, args):
         # May either have 0 or 1 args
@@ -214,19 +211,20 @@ class Interpreter:
     # Name: 'encode'
     def stdEncode(self, args):
         assertArgsLength(args, 1, "encode")
+        arg = self.evaluate(args[0])
+        if type(arg) is list:
+            return [chr(item) for item in arg]
+        else:
+            return chr(self.evaluate(args[0]))
+                             
+                             
+    # Name: 'decode'
+    def stdDecode(self, args):
+        assertArgsLength(args, 1, "decode")
         li = []
         for i in self.evaluate(args[0]):
             li.append(ord(i))
         return li
-
-    
-    # Name: 'decode'
-    def stdDecode(self, args):
-        assertArgsLength(args, 1, "decode")
-        if isdigit(args[0]):
-            return chr(self.evaluate(args[0]))
-        else:
-            raise SolarError(f"Function 'decode' expected a numeric argument, but got '{args[0]}'.")
           
         
     # Name: 'raise'
