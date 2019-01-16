@@ -1,6 +1,6 @@
-(set fizzBuzz 
+(def fizzBuzz 
     (lambda (min max)
-        (set current min)
+        (def current min)
         (while (<= current max)
             (if (= (% current 15) 0)
                 (print "FizzBuzz")
