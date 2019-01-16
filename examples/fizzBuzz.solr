@@ -1,4 +1,4 @@
-`Has been Tested (16/01/19)`
+`Not tested`
 (def fizzBuzz 
     (lambda (min max)
         (def current min)
