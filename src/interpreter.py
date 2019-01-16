@@ -14,6 +14,7 @@ class Interpreter:
             "*": lambda args: self.stdMultiply(args),
             "/": lambda args: self.stdDivide(args),
             "%": lambda args: self.stdModulo(args),
+            "lambda": lambda args: self.stdLambda(args),
             "list": lambda args: self.stdList(args),
             "int": lambda args: self.stdInt(args),
             "float": lambda args: self.stdFloat(args),
@@ -51,6 +52,11 @@ class Interpreter:
         except KeyError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
 
+        # A user-defined lambda
+        if type(function) is SolarLambda:
+            return function.call(expression["params"])
+            
+        # A built in function
         return function(expression["params"])
 
                         
@@ -139,6 +145,36 @@ class Interpreter:
         assertArgsLength(args, 2, "%")
         return self.evaluate(args[0]) % self.evaluate(args[1])
 
+   
+    # Name: 'lambda'
+    def stdLambda(self, args):
+        # Must take at least 1 arg
+        if len(args) < 1:
+            raise SolarError(f"Function 'lambda' expected at least 1 args, but got {len(args)}.")
+        
+        if len(args) == 1:
+            return lambda: None
+        else:
+            params = args[0]
+            if params["type"] != "CallExpression":
+                raise SolarError("Expected lambda arguments.")
+            params = params["params"]
+                             
+            for param in params:
+                if param["type"] != "VariableExpression":
+                    raise SolarError("Lambda arguments must be names, not values.")
+            
+            # Now we just have a list of strings that are the names of the params.
+            params = [param["value"] for param in params]
+                   
+            # Slice off the first argument, we don't need it anymore
+            args = args[1:]
+            
+            # The lambda's body is the remaining arguments.
+            body = args
+            
+            return SolarLambda(params, body)
+                             
                              
     # Name: 'list'
     def stdList(self, args):
