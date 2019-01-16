@@ -1,11 +1,15 @@
-(def fib (lambda (n)
-    (def ret)
-    (if (<= n 1)
-        (set ret n)
-    ) (else
-        (set ret (+ (fib (- n 1)) (fib (- n 2))))
+(def fib
+    (lambda (n)
+        (def nums (list 0 1))
+	(def c 2)	
+
+        (while (<= c n)
+            (append nums (+ (index nums (- c 1)) (index nums (- c 2))))
+            (set c (+ c 1))
+        )
+
+        nums
     )
-    ret
 )
         
-(fib 20)
+(put (fib 35))

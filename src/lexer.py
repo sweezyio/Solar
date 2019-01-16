@@ -50,7 +50,7 @@ class Lexer():
             # Names
             validName = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                          'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                         '$', '+', '-', '/', '*', '%', '=', '>', '<']
+                         '$', '+', '-', '/', '*', '%', '=', '>', '<', '!']
             
             if char.lower() in validName:
                 self.name()
@@ -116,7 +116,7 @@ class Lexer():
     def name(self):
         validName = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                      'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                     '$', '+', '-', '/', '*', '%', '=', '>', '<']
+                     '$', '+', '-', '/', '*', '%', '=', '>', '<', '!']
         value = ""
         while not self.atEnd() and self.inp[self.current].lower() in validName:
             value += self.inp[self.current].lower()

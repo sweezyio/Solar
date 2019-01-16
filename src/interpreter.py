@@ -21,6 +21,8 @@ class Interpreter:
             "%": lambda args: self.stdModulo(args),
             "lambda": lambda args: self.stdLambda(args),
             "list": lambda args: self.stdList(args),
+            "index": lambda args: self.stdIndex(args),
+            "append": lambda args: self.stdAppend(args),
             "int": lambda args: self.stdInt(args),
             "float": lambda args: self.stdFloat(args),
             "str": lambda args: self.stdStr(args),
@@ -28,6 +30,7 @@ class Interpreter:
             "print": lambda args: self.stdPrint(args),
             "get": lambda args: self.stdGet(args),
             "=": lambda args: self.stdEquals(args),
+            "!=": lambda args: not self.stdEquals(args),
             ">": lambda args: self.stdGreater(args),
             "<": lambda args: self.stdLess(args),
             ">=": lambda args: self.stdGreaterOrEquals(args),
@@ -225,6 +228,25 @@ class Interpreter:
     # Name: 'list'
     def stdList(self, args):
         return [self.evaluate(arg) for arg in args]
+
+
+    # Name: 'index'
+    def stdIndex(self, args):
+        assertArgsLength(args, 2, "index")
+        try:
+            return self.evaluate(args[0])[self.evaluate(args[1])]
+        except IndexError:
+            raise SolarError("List index out of range.")
+        except TypeError:
+            raise SolarError("List index must be a number.")
+
+
+    # Name: 'append'
+    def stdAppend(self, args):
+        assertArgsLength(args, 2, "append")
+        lst = self.evaluate(args[0])
+        lst.append(self.evaluate(args[1]))
+        return lst
                              
                         
     # Name: 'int'
