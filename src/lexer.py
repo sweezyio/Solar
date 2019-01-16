@@ -53,8 +53,6 @@ class Lexer():
                 string.ascii_lowercase + string.ascii_uppercase +
                 "$+-/*%=><!"
             )
-            
-            print(validName)
 
             if char in validName:
                 self.name()
