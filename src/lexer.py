@@ -116,8 +116,19 @@ class Lexer():
         while not self.atEnd() and self.inp[self.current].lower() in validName:
             value += self.inp[self.current].lower()
             self.current += 1
+        
+        type = "name"
+        
+        if value == "true" or value == "false":
+            type = "bool"
+            value = bool(value)
+            
+        if value == "null":
+            type = "null"
+            value = None
+        
         self.tokens.append({
-            "type": "name",
+            "type": type,
             "value": value,
         })
         

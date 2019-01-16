@@ -27,9 +27,13 @@ class Parser():
     def parseExpression(self):
         token = self.tokens[self.current]
         if token["type"] == "number":
-            return self.parseNumber()
+            return self.parseLiteral("NumberLiteral")
         if token["type"] == "string":
-            return self.parseString()
+            return self.parseLiteral("StringLiteral")
+        if token["type"] == "bool":
+            return self.parseLiteral("BoolLiteral")
+        if token["type"] == "null":
+            return self.parseLiteral("NullLiteral")
         if token["type"] == "name":
             return self.parseVariable()
         if token["type"] == "paren" and token["value"] == "(":
@@ -37,24 +41,16 @@ class Parser():
             
         raise SolarError(f"Parse error: Expected expression at '{token['value']}'.")
            
-                        
-    def parseNumber(self):
+                         
+    def parseLiteral(self, literalType):
         token = self.tokens[self.current]
         self.current += 1
         return {
-            "type": "NumberLiteral",
-            "value": token["value"]
-        }
-              
-                        
-    def parseString(self):
-        token = self.tokens[self.current]
-        self.current += 1
-        return {
-            "type": "StringLiteral",
+            "type": literalType,
             "value": token["value"]
         }
          
+                         
     def parseVariable(self):
         token = self.tokens[self.current]
         self.current += 1
@@ -62,7 +58,8 @@ class Parser():
             "type": "VariableExpression",
             "value": token["value"]
         }
-                        
+            
+                         
     def parseCall(self):
         self.current += 1
         

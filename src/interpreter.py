@@ -8,33 +8,35 @@ from error import SolarError
 
 class Interpreter:
     def __init__(self):
-        self.functions = {
-            "+": lambda args: self.add(args),
-            "-": lambda args: self.subtract(args),
-            "*": lambda args: self.multiply(args),
-            "/": lambda args: self.divide(args),
-            "%": lambda args: self.modulo(args),
-            "int": lambda args: self.integer(args),
-            "float": lambda args: self.decimal(args),
-            "str": lambda args: self.string(args),
-            "put": lambda args: self.put(args),
-            "=": lambda args: self.equals(args),
-            ">": lambda args: self.greater(args),
-            "<": lambda args: self.less(args),
-            "lower": lambda args: self.lower(args),
-            "upper": lambda args: self.upper(args),
-            "encode": lambda args: self.enc(args),
-            "decode": lambda args: self.dec(args),
-            "set": lambda args: self.setVariable(args),
+        self.environment = {
+            "+": lambda args: self.stdAdd(args),
+            "-": lambda args: self.stdSubtract(args),
+            "*": lambda args: self.stdMultiply(args),
+            "/": lambda args: self.stdDivide(args),
+            "%": lambda args: self.stdModulo(args),
+            "int": lambda args: self.stdInt(args),
+            "float": lambda args: self.stdFloat(args),
+            "str": lambda args: self.stdStr(args),
+            "put": lambda args: self.stdPut(args),
+            "get": lambda args: self.stdGet(args),
+            "=": lambda args: self.stdEquals(args),
+            ">": lambda args: self.stdGreater(args),
+            "<": lambda args: self.stdLess(args),
+            "lower": lambda args: self.stdLower(args),
+            "upper": lambda args: self.stdUpper(args),
+            "encode": lambda args: self.stdEncode(args),
+            "decode": lambda args: self.stdDecode(args),
+            "def": lambda args: self.stdDef(args),
+            "set": lambda args: self.stdSet(args),
+            "raise": lambda args: self.stdRaise(args),
         }
-        self.variables = {}
 
 
     def getVariable(self, expression):
         name = expression["value"]
 
         try:
-            return self.variables[name]
+            return self.environment[name]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined variable {name}.")
 
@@ -43,7 +45,7 @@ class Interpreter:
         functionName = expression["name"]
         
         try:
-            function = self.functions[functionName]
+            function = self.environment[functionName]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
 
@@ -53,12 +55,15 @@ class Interpreter:
     def evaluate(self, expression):
         typ = expression["type"]
 
-        if typ == "NumberLiteral":
+        if (typ == "NumberLiteral" or
+                typ == "StringLiteral" or
+                typ == "BoolLiteral" or
+                typ == "NullLiteral"):
             return expression["value"]
-        elif typ == "StringLiteral":
-            return expression["value"]
+        
         elif typ == "VariableExpression":
             return self.getVariable(expression)
+        
         elif typ == "CallExpression":
             return self.call(expression)
 
@@ -69,120 +74,157 @@ class Interpreter:
                         
     # --- Functions in environment --- #
 
+    # Name: 'def'
+    def stdDef(self, args):
+        # May either have 1 or 2 args
+        if len(args) > 2:
+            raise SolarError(f"Function 'def' expected 1 or 2 args, but got {len(args)}.")
+            
+        name = args[0]
+
+        if name["type"] != "VariableExpression":
+            raise SolarError("Can only assign to variable names.")
+            
+        value = self.evaluate(args[1]) if len(args) == 2 else None
+        
+        if name["value"] in self.environment.keys():
+            raise SolarError(f"Cannot redeclare the already declared variable '{name['value']}'. Try using 'set' instead.")
+        
+        self.environment[name["value"]] = value
+        
+    
     # Name: 'set'
-    def setVariable(self, args):
-        assert(len(args) == 2)
+    def stdSet(self, args):
+        assertArgsLength(args, 2, "set")
 
         name = args[0]
 
         if name["type"] != "VariableExpression":
             raise SolarError("Can only assign to variable names.")
 
-        self.variables[name["value"]] = self.evaluate(args[1])   
+        if name["value"] in self.environment.keys():
+            self.environment[name["value"]] = self.evaluate(args[1])
+        else:                    
+            raise SolarError(f"Cannot set the undeclared variable '{name['value']}'. Try using 'def' instead.")
 
 
     # Name: '+'
-    def add(self, args):
-        assert(len(args) == 2)
+    def stdAdd(self, args):
+        assertArgsLength(args, 2, "+")
         return self.evaluate(args[0]) + self.evaluate(args[1])
 
   
     # Name: '-'
-    def subtract(self, args):
-        assert(len(args) == 2)
+    def stdSubtract(self, args):
+        assertArgsLength(args, 2, "-")
         return self.evaluate(args[0]) - self.evaluate(args[1])
 
   
     # Name: '*'
-    def multiply(self, args):
-        assert(len(args) == 2)
+    def stdMultiply(self, args):
+        assertArgsLength(args, 2, "*")
         return self.evaluate(args[0]) * self.evaluate(args[1])
 
   
     # Name: '/'
-    def divide(self, args):
-        assert(len(args) == 2)
+    def stdDivide(self, args):
+        assertArgsLength(args, 2, "/")
         return self.evaluate(args[0]) / self.evaluate(args[1])
 
   
     # Name: '%'
-    def modulo(self, args):
-        assert(len(args) == 2)
+    def stdModulo(self, args):
+        assertArgsLength(args, 2, "%")
         return self.evaluate(args[0]) % self.evaluate(args[1])
 
                         
     # Name: 'int'
-    def integer(self, args):
-        assert(len(args) == 1)
+    def stdInt(self, args):
+        assertArgsLength(args, 1, "int")
         return int(self.evaluate(args[0]))
 
                         
     # Name: 'float'
-    def decimal(self, args):
-        assert(len(args) == 1)
+    def stdFloat(self, args):
+        assertArgsLength(args, 1, "float")
         return float(self.evaluate(args[0]))
 
                         
     # Name: 'str'
-    def string(self, args):
-        assert(len(args) == 1)
+    def stdStr(self, args):
+        assertArgsLength(args, 1, "str")
         return str(self.evaluate(args[0]))
 
   
     # Name: 'put'
-    def put(self, args):
-        assert(len(args) == 1)
+    def stdPut(self, args):
+        assertArgsLength(args, 1, "put")
         val = self.evaluate(args[0])
         print(val)
         return val
+    
+    
+    # Name: 'get'
+    def stdGet(self, args):
+        assertArgsLength(args, 0, "get")
+        return input()
 
-    # Name '='
+    
+    # Name: '='
+    def stdEquals(self, args):
+        assertArgsLength(args, 2, "=")
+        return self.evaluate(args[0]) == self.evaluate(args[1])
 
-    def equals(self, args):
-        assert(len(args) == 2)
-        return args[0] == args[1]
-
-    # Name '>'
-
-
-    def greater(self, args):
-        assert(len(args) == 2)
+    
+    # Name: '>'
+    def stdGreater(self, args):
+        assertArgsLength(args, 2, ">")
         return self.evaluate(args[0]) > self.evaluate(args[1])
 
-    # Name '<'
-
-    def less(self, args):
-        assert(len(args) == 2)
+    
+    # Name: '<'
+    def stdLess(self, args):
+        assertArgsLength(args, 2, "<")
         return self.evaluate(args[0]) < self.evaluate(args[1])
 
-    # Name 'lower'
-
-    def lower(self, args):
-        assert(len(args) == 1)
+    
+    # Name: 'lower'
+    def stdLower(self, args):
+        assertArgsLength(args, 1, "lower")
         return self.evaluate(args[0]).lower()
 
-    # Name 'upper'
-
-    def upper(self, args):
-        assert(len(args) == 1)
+    
+    # Name: 'upper'
+    def stdUpper(self, args):
+        assertArgsLength(args, 1, "upper")
         return self.evaluate(args[0]).upper()
 
-    # Name 'encode'
-
-    def enc(self, args):
-        assert(len(args) == 1)
+    
+    # Name: 'encode'
+    def stdEncode(self, args):
+        assertArgsLength(args, 1, "encode")
         li = []
         for i in self.evaluate(args[0]):
             li.append(ord(i))
         return li
 
-    # Name 'decode'
-
-    def dec(self, args):
-        assert(len(args) == 1)
+    
+    # Name: 'decode'
+    def stdDecode(self, args):
+        assertArgsLength(args, 1, "decode")
         if isdigit(args[0]):
             return chr(self.evaluate(args[0]))
         else:
-            raise RuntimeError(f"Invalid Character {args[0]}, must be numeric.")
+            raise SolarError(f"Function 'decode' expected a numeric argument, but got '{args[0]}'.")
+          
+        
+    # Name: 'raise'
+    def stdRaise(self, args):
+        assertArgsLength(args, 1, "raise")
+        raise SolarError(f"Error raised: {self.evaluate(args[0])}")
   
 # --- End functions in environment --- #
+
+def assertArgsLength(args, expectedLength, functionName):
+    if len(args) != expectedLength:
+        raise SolarError(f"Function '{functionName}' expected {expectedLength} args, but got {len(args)}.")
