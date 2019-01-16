@@ -44,11 +44,11 @@ class Interpreter:
     def getVariable(self, expression):
         name = expression["value"]
 
-        try:
-            for scope in reversed(self.environment):
+        for scope in reversed(self.environment):
+            if name in scope.keys():
                 return scope[name]
-        except KeyError:
-            raise SolarError(f"Runtime error: Undefined variable {name}.")
+        
+        raise SolarError(f"Runtime error: Undefined variable {name}.")
 
     
     def callLambda(self, args, lambda_):
@@ -74,9 +74,8 @@ class Interpreter:
         functionName = expression["name"]
         
         try:
-            for scope in reversed(self.environment):
-                function = scope[functionName]
-        except KeyError:
+            function = self.getVariable(functionName)
+        except SolarError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
             
         return function(expression["params"])
