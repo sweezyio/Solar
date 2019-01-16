@@ -5,6 +5,7 @@
 # See https://github.com/Solar-language/Solar/blob/master/LICENSE.md
 
 from error import SolarError
+import string
 
 class Lexer():
     def __init__(self):
@@ -48,11 +49,14 @@ class Lexer():
                 continue
                 
             # Names
-            validName = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                         '$', '+', '-', '/', '*', '%', '=', '>', '<', '!']
+            validName = (
+                string.ascii_lowercase + string.ascii_uppercase +
+                "$+-/*%=><!"
+            )
             
-            if char.lower() in validName:
+            print(validName)
+
+            if char in validName:
                 self.name()
                 continue
                 
@@ -114,12 +118,14 @@ class Lexer():
         
 
     def name(self):
-        validName = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                     '$', '+', '-', '/', '*', '%', '=', '>', '<', '!']
+        validName = (
+            string.ascii_lowercase + string.ascii_uppercase +
+            "$+-/*%=><!"
+        )
+        
         value = ""
-        while not self.atEnd() and self.inp[self.current].lower() in validName:
-            value += self.inp[self.current].lower()
+        while not self.atEnd() and self.inp[self.current] in validName:
+            value += self.inp[self.current]
             self.current += 1
         
         type = "name"
