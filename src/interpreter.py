@@ -58,7 +58,7 @@ class Interpreter:
         lambdaScope = {}
         
         for index, param in enumerate(lambda_.params):
-            lambdaScope[param] = args[index]
+            lambdaScope[param] = self.evaluate(args[index])
             
         self.environment.append(lambdaScope)
         self.scopeDepth += 1
@@ -74,7 +74,8 @@ class Interpreter:
         functionName = expression["name"]
         
         try:
-            function = self.environment[functionName]
+            for scope in reversed(self.environment):
+                function = scope[functionName]
         except KeyError:
             raise SolarError(f"Runtime error: Undefined function '{functionName}'.")
             
