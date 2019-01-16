@@ -7,6 +7,6 @@
  - [x] Make Sure It just works out maths and doesn't print unless inside put function
  - [x] Make it raise an error if the function being called does not exist
  - [x] Add variables
- - [ ] Add custom functions
+ - [x] Add custom functions
 
 More coming soon.
