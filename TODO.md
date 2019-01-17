@@ -8,6 +8,7 @@
  - [x] Make it raise an error if the function being called does not exist
  - [x] Add variables
  - [x] Add custom functions
- - [ ] Write a plugin for VS Code
+ - [x] Write a plugin for VS Code
+ - [ ] Publish plugin for VS Code
 
 More coming soon.
