@@ -1,6 +1,7 @@
 ![Solar-logo](https://github.com/Solar-language/Solar/blob/master/media/solar-moving-logo.gif?raw=true)
 # Solar
 A lisp-style programming language designed for working out complex mathematics and written in Python.
+
 Now with an [official VS Code extension](https://github.com/Solar-language/Solar-vscode)!
 
 Eg.
