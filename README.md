@@ -1,4 +1,4 @@
-![Solar-logo](https://github.com/Solar-language/Solar/blob/master/media/solar-moving-logo.png?raw=true)
+![Solar-logo](https://github.com/Solar-language/Solar/blob/master/media/solar-moving-logo.gif?raw=true)
 # Solar
 A lisp-style programming language designed for working out complex mathematics and written in Python.
 
