@@ -1,3 +1,4 @@
+
 ﻿![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
 
 # Solar Docs - Using Functions
@@ -12,8 +13,11 @@ The official solar documentation designed so the team knows what is going on and
 		- [Operator Functions](#operator-functions)
 			- [Arithmetic Operators](#arithmetic-operators)
 			- [Comparison Operators](#comparison-operators)
-	    - [Converter Functions](#converter-functions)
-	    - [I/O Functions](#io-functions)
+	  - [Converter Functions](#converter-functions)
+	  - [I/O Functions](#io-functions)
+	  - [Variable Functions](#variable-functions)
+	  - [Control Flow Functions](#control-flow-functions)
+	  - [Error Functions](#error-functions)
 
 ## Using Functions
 
@@ -30,29 +34,43 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |/       |Divide                   | Yes|
 |%       |Modulo                   | Yes|
 |=       |Equal                    | Yes|
+|!=      |Not equal                | Yes|
 |>       |Greater Than             | Yes|
 |<       |Less Than                | Yes|
-|>=      |Greater Than or Equal To | Yes|
+|>=      |Greater Than or Equal To | Yes |
 |<=      |Less Than or Equal To    | Yes|
 |        |**Converters**           |    |
-|list    |Convert to List          | No |
+|lambda  |Creates a lambda object  |Yes  |
+|list    |Return all parameters as a list| Yes |
 |int     |Convert to Integer       | Yes|
 |str     |Convert to String        | Yes|
 |float   |Convert to Float         | Yes|
+|bool    |Convert to Bool          | Yes|
 |lower   |Convert to Lowercase     | Yes|
 |upper   |Convert to Uppercase     | Yes|
 |encode  |Convert Text to Unicode  | Yes|
 |decode  |Convert Unicode to Text  | Yes|
-|        |**I/O**           |    |
-|put     |Print output             | Yes|
-|get     |Print input              | Yes|
-|print   |Print input without new line| Yes|
-|def     |Define a variable        | Yes|
-|set     |Set a variable           | Yes|
+|        |**I/O**                  |    |
+|put     |Print output without new line            | Yes|
+|print     |Print output             | Yes|
+|get     |Read a line of input from stdin| Yes |
+|        |**Variables**         |    |    
+|def     |Declare a variable       | Yes |
+|set     |Reassign a variable      | Yes |
+|append  |Append to a list.        | Yes |
+|index   |Get the *n*th value in a list| Yes |
+|        |**Control flow**         |    |
+|if      |If expression.           | Yes |
+|elif    |May follow an if expression| Yes |
+|else    |May follow an if or elif expression|Yes|
+|while   |While expression         |Yes  |
+|        |**Errors**               |    |
+|raise   |Raise a SolarError   | Yes |
+
 
 ### Functions In-Depth
 
-We are going to split the In-depth functions into three main parts, **Operators**, **Converters** and **I/O**.
+We are going to split the In-depth functions into six main parts, **Operators**, **Converters**, **I/O**, **Variables**, **Control Flow** and **Errors**.
 
 #### Operator Functions
 
@@ -247,8 +265,8 @@ If passed no parameters, it will simply return an empty list.
 
 Example:
 ```
-(put (list))
-(put (list 1 2 "foo" true))
+(print (list))
+(print (list 1 2 "foo" true))
 ```
 Output:
 ```
@@ -265,8 +283,8 @@ Syntax: `(int <value 1>)`
 Example:
 
 ```
-(put (+ "8" "8"))
-(put (+ (int "8") (int "8")))
+(print (+ "8" "8"))
+(print (+ (int "8") (int "8")))
 ```
 
 Output:
@@ -285,8 +303,8 @@ Syntax: `(str <value 1>)`
 Example:
 
 ```
-(put (+ 24 6))
-(put (+ (str 24) (str 6)))
+(print (+ 24 6))
+(print (+ (str 24) (str 6)))
 ```
 
 Output:
@@ -294,26 +312,6 @@ Output:
 ```
 30
 246
-```
-
-4. **float**
-
-Converts a value to a float.
-
-Syntax: `(float <value 1>)`
-
-Example:
-
-```
-(put (+ "8.1" "8.1"))
-(put (+ (float "8.1") (float "8.1")))
-```
-
-Output:
-
-```
-8.18.1
-16.2
 ```
 
 5. **lower**
@@ -379,8 +377,8 @@ Syntax: `(encode <value 1>)`
 Example:
 
 ```
-(put (encode 72))
-(put (encode (list 72 101 108)))
+(print (encode 72))
+(print (encode (list 72 101 108)))
 ```
 
 Output:
@@ -388,6 +386,42 @@ Output:
 ```
 H
 Hel
+```
+
+9. **lambda**
+
+Creates a lambda object. 
+
+Syntax: `(lambda (params) <unlimited amount of values (optional>)`
+
+Example:
+
+```
+(def plus (lambda (x y) (put (+ x y)))
+(plus 1 3)
+```
+
+Output:
+
+```
+4
+```
+10. **bool**
+
+Converts a value to a Boolean.
+
+Syntax: `(bool <value 1>)`
+
+Example:
+
+```
+(put (bool 1))
+```
+
+Output:
+
+```
+True
 ```
 
 #### I/O Functions
@@ -402,12 +436,13 @@ Example:
 
 ```
 (put "Hello, World!")
+(put "Hello, World!")
 ```
 
 Output:
 
 ```
-Hello, World!
+Hello, World!Hello, World!
 ```
 
 2. **print**:
@@ -444,8 +479,8 @@ Output:
 ```
 Hello, World! > 
 ```
-
-4. **def**
+#### Variable Functions
+1. **def**
 
 Defines a variable. Note that you cannot redefine a variable already defined with `def` - but you can reassign its value using
 `set`.
@@ -468,7 +503,7 @@ null
 32
 ```
 
-5. **set**
+2. **set**
 
 Assigns to a variable. Note that a variable must be defined with `def` before it is assigned to with `set`.
 
@@ -487,6 +522,145 @@ Output:
 
 ```
 Goodbye, world! 
+```
+
+3. **append**
+
+Appends to a list.
+
+Syntax: `(append <value 1> <value 2>)`
+
+Example:
+
+```
+(def x (list "Hi" "Bye"))
+(print x)
+(append x "Good Luck")
+(print x)
+```
+
+Output:
+
+```
+["Hi", "Bye"]
+["Hi", "Bye", "Good Luck"]
+```
+
+
+4. **index**
+
+Finds the *n*th value in a list.
+
+Syntax: `(index <value 1> <value 2>)`
+
+Example:
+
+```
+(def x (list "Hi" "Bye" "Good Luck"))
+(print (index x 2))
+```
+
+Output:
+
+```
+Good Luck
+```
+
+#### Control-Flow Functions
+
+1. **if**
+
+Checks if the statement is true, and if it is, runs something.
+
+Syntax: `(if <value 1> <value 2> <unlimited amount of values (optional>)`
+
+Example:
+
+```
+(if (= 1 1) (print "Hi"))
+```
+
+Output:
+
+```
+Hi
+```
+
+2. **elif**
+
+If the if or elif statement before it is not true, and it is true then runs something.
+
+Syntax: `(elif <value 1> <value 2> <unlimited amount of values (optional>)`
+
+Example:
+
+```
+(if (= 1 2) (print "Hi"))(elif (< 1 2) (print "Bye"))
+```
+
+Output:
+
+```
+Bye
+```
+
+3. **else**
+
+If the if or elif statement before it is not true then it runs something.
+
+Syntax: `(else <value 1> <unlimited amount of values (optional>)`
+
+Example:
+
+```
+(if (= 1 2) (print "Hi"))(elif (> 1 2) (print "Bye"))(else (print "Good Luck"))
+```
+
+Output:
+
+```
+Good Luck
+```
+
+4. **while**
+
+While a statement is true, it repeats.
+
+Syntax: `(while <value 1> <value 2> <unlimited amount of values (optional>)`
+
+Example:
+
+```
+(while (= 1 1) (print 1))
+```
+
+Output:
+
+```
+1
+1
+1
+...
+```
+
+#### Error Functions
+
+1. **raise**
+
+Raises a SolarError.
+
+Syntax: `(raise <value 1>)`
+
+Example:
+
+```
+(raise "Hello, Bye, Good Luck
+```
+
+Output:
+
+```
+Error raised: Hello, Bye, Good Luck
 ```
 
 - The Solar Team
