@@ -8,7 +8,7 @@ The official solar documentation designed so the team knows what is going on and
 
 - [About Solar](#about-solar)
 - [Reserved Names](#reserved-names)
-	- [Reserved Variable Names](#reserved-variable-names)
+	- [Keywords](#keywords)
 	- [Reserved Function Names](#reserved-function-names)
 ## About Solar
 
@@ -16,7 +16,7 @@ Solar is a Lisp-Style language that uses built-in functions to run everything, m
 
 ## Reserved Names
 
-In the topic of reserved names, we will split it up into two parts: Reserved Variable Names and Reserved Function Names, we will start with the smaller Reserved variable names.
+In the topic of reserved names, we will split it up into two parts: Keywords and Reserved Function Names, we will start with the smaller Keywords.
 
 ### Keywords
 These reserved names below are neither functions nor variables; rather they are keywords built in to the language:
@@ -27,14 +27,6 @@ These reserved names below are neither functions nor variables; rather they are 
 |false|False boolean value|Yes|
 |null|Null value|Yes|
 
-
-### Reserved Variable Names 
-
-| Name   | Usage                   | Implemented? |
-|:------:|:-----------------------:|:------------:|
-|datetime|Display the time and date| No|
-
-Unfinished...
 
 ### Reserved Function Names
 
@@ -75,10 +67,13 @@ Unfinished...
 |decode  |Convert Unicode to Text  | Yes|
 |        |**I/O**                  |    |
 |put     |Print output without new line            | Yes|
-|print     |Print output             | Yes|
+|print    |Print output             | Yes|
 |get     |Read a line of input from stdin| Yes |
-|        |**Errors**               |    |
+|        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
+|datetime   |Returns the date and/or time   | Yes |
+|random   |Returns a random number   | Yes |
+
 
 More coming soon...
 
