@@ -9,6 +9,6 @@
  - [x] Add variables
  - [x] Add custom functions
  - [x] Write a plugin for VS Code
- - [ ] Publish plugin for VS Code
+ - [x] Publish plugin for VS Code
 
 More coming soon.
