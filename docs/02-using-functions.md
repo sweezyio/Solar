@@ -644,7 +644,7 @@ Output:
 ...
 ```
 
-#### Error Functions
+#### Other Functions
 
 1. **raise**
 
