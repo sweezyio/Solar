@@ -5,6 +5,8 @@
 # See https://github.com/Solar-language/Solar/blob/master/LICENSE.md
 
 from error import SolarError
+import datetime
+import random
 
 class SolarLambda:
     def __init__(self, params, body):
@@ -47,6 +49,8 @@ class Interpreter:
             "elif": lambda args: self.stdElif(args),
             "else": lambda args: self.stdElse(args),
             "while": lambda args: self.stdWhile(args),
+            "datetime": lambda args: self.stdDateTime(args),
+            "random": lambda args: self.stdRandom(args),
         }]
         self.scopeDepth = 0
         self.lastExpr = None
@@ -229,6 +233,40 @@ class Interpreter:
     # Name: 'list'
     def stdList(self, args):
         return [self.evaluate(arg) for arg in args]
+
+
+    # Name: 'datetime'
+    def stdDateTime(self, args):
+        if len(args) > 1:
+            raise SolarError(f"Function 'datetime' expected 0 or 1 args, but got {len(args)}.")
+        
+        if len(args) == 0:
+            return self.evaluate(datetime.datetime.now().strftime("%c"))
+        else:
+            try:
+                return self.evaluate(datetime.datetime.now().strftime(f"%{args[0]}"))
+            except:
+                raise SolarError(f"Invalid Argument for function 'datetime', {args[0]}.")
+
+
+    # Name: 'random'
+    def stdRandom(self, args):
+        if len(args) > 2:
+            raise SolarError(f"Function 'datetime' expected 0, 1 or 2 args, but got {len(args)}.")
+
+        if len(args) == 0:
+            return self.evaluate(random.random())
+        elif len(args) == 1:
+            try:
+                return self.evaluate(random.randint(0, args[0]))
+            except:
+                raise SolarError(f"Invalid Argument for function 'random', {args[0]}.")
+        else:
+            try:
+                return self.evaluate(random.randint(args[0], args[1]))
+            except:
+                raise SolarError(f"Invalid Arguments for function 'random', {args[0]} and {args[1]}.")
+
 
 
     # Name: 'index'
