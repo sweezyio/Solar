@@ -241,10 +241,10 @@ class Interpreter:
             raise SolarError(f"Function 'datetime' expected 0 or 1 args, but got {len(args)}.")
         
         if len(args) == 0:
-            return self.evaluate(datetime.datetime.now().strftime("%c"))
+            return datetime.datetime.now().strftime("%c")
         else:
             try:
-                return self.evaluate(datetime.datetime.now().strftime(f"%{args[0]}"))
+                return datetime.datetime.now().strftime(f"%{self.evaluate(args[0])}")
             except:
                 raise SolarError(f"Invalid Argument for function 'datetime', {args[0]}.")
 
@@ -255,15 +255,15 @@ class Interpreter:
             raise SolarError(f"Function 'datetime' expected 0, 1 or 2 args, but got {len(args)}.")
 
         if len(args) == 0:
-            return self.evaluate(random.random())
+            return random.random()
         elif len(args) == 1:
             try:
-                return self.evaluate(random.randint(0, args[0]))
+                return random.randint(0, self.evaluate(args[0]))
             except:
                 raise SolarError(f"Invalid Argument for function 'random', {args[0]}.")
         else:
             try:
-                return self.evaluate(random.randint(args[0], args[1]))
+                return random.randint(self.evaluate(args[0]), self.evaluate(args[1])))
             except:
                 raise SolarError(f"Invalid Arguments for function 'random', {args[0]} and {args[1]}.")
 
