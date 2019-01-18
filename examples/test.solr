@@ -42,6 +42,11 @@ Ah
     (fizzBuzz 6 6)
     (set x (+ x 1))
 )
+(print (datetime))
+(print (datetime "a"))
+(print (random))
+(print (random 10))
+(print (random 3 10))
 (raise "We are Done!!!!")
 `If you get an error at the end that says "We are Done!!!!", then everything worked.`
        
