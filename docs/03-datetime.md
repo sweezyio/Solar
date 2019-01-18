@@ -9,7 +9,10 @@ The official solar documentation designed so the team knows what is going on and
 - [Datetime Value Table](#datetime-letter-table)
 
 ## Datetime Value Table
-Here is a list of all the values you can use to change the output of the datetime function. Note: Unlike python, you do not use a % before the value.
+Here is a list of all the values you can use to change the output of the datetime function. 
+
+Note: Unlike python, you do not use a % before the value.
+
 Note: These values are **case-sensitive**, a is not the same as A.
 
 |Value|Description|Example|
