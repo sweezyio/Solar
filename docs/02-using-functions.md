@@ -17,7 +17,7 @@ The official solar documentation designed so the team knows what is going on and
 	  - [I/O Functions](#io-functions)
 	  - [Variable Functions](#variable-functions)
 	  - [Control Flow Functions](#control-flow-functions)
-	  - [Error Functions](#error-functions)
+	  - [Other Functions](#other-functions)
 
 ## Using Functions
 
@@ -39,6 +39,16 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |<       |Less Than                | Yes|
 |>=      |Greater Than or Equal To | Yes |
 |<=      |Less Than or Equal To    | Yes|
+|        |**Variables**         |    |    
+|def     |Declare a variable       | Yes |
+|set     |Reassign a variable      | Yes |
+|append  |Append to a list.        | Yes |
+|index   |Get the *n*th value in a list| Yes |
+|        |**Control flow**         |    |
+|if      |If expression.           | Yes |
+|elif    |May follow an if expression| Yes |
+|else    |May follow an if or elif expression|Yes|
+|while   |While expression         |Yes  |
 |        |**Converters**           |    |
 |lambda  |Creates a lambda object  |Yes  |
 |list    |Return all parameters as a list| Yes |
@@ -52,25 +62,16 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |decode  |Convert Unicode to Text  | Yes|
 |        |**I/O**                  |    |
 |put     |Print output without new line            | Yes|
-|print     |Print output             | Yes|
+|print    |Print output             | Yes|
 |get     |Read a line of input from stdin| Yes |
-|        |**Variables**         |    |    
-|def     |Declare a variable       | Yes |
-|set     |Reassign a variable      | Yes |
-|append  |Append to a list.        | Yes |
-|index   |Get the *n*th value in a list| Yes |
-|        |**Control flow**         |    |
-|if      |If expression.           | Yes |
-|elif    |May follow an if expression| Yes |
-|else    |May follow an if or elif expression|Yes|
-|while   |While expression         |Yes  |
-|        |**Errors**               |    |
+|        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
-
+|datetime   |Returns the date and/or time   | Yes |
+|random   |Returns a random number   | Yes |
 
 ### Functions In-Depth
 
-We are going to split the In-depth functions into six main parts, **Operators**, **Converters**, **I/O**, **Variables**, **Control Flow** and **Errors**.
+We are going to split the In-depth functions into six main parts, **Operators**, **Converters**, **I/O**, **Variables**, **Control Flow** and **Other**.
 
 #### Operator Functions
 
@@ -654,7 +655,7 @@ Syntax: `(raise <value 1>)`
 Example:
 
 ```
-(raise "Hello, Bye, Good Luck
+(raise "Hello, Bye, Good Luck")
 ```
 
 Output:
@@ -662,5 +663,50 @@ Output:
 ```
 Error raised: Hello, Bye, Good Luck
 ```
+
+2. **datetime**
+
+Returns the date and/or time.
+
+Syntax: `(datetime <value 1 (optional)>)`
+
+Example:
+
+```
+(print (datetime))
+(print (datetime "a"))
+```
+
+Output (Note: These values are not the actual output, they are just an example as they vary):
+
+```
+Mon Dec 11 15:16:13 2018
+Mon
+```
+For a complete list of the letters, see [03-datetime](/docs/03-datetime.md)
+
+3. **random**
+
+Returns a random number
+
+Syntax: `(random <value 1 (optional)> <value 2 (optional)>)`
+
+Example:
+
+```
+(print (random)) ` Between 0.0 and 1.0 `
+(print (random 10)) `Between 0 and 10`
+(print (random 3 10)) `Between 3 and 10`
+```
+
+Output:
+
+```
+0.4
+6
+4
+```
+
+
 
 - The Solar Team
