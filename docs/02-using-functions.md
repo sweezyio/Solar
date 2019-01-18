@@ -687,7 +687,7 @@ For a complete list of the letters, see [03-datetime](/docs/03-datetime.md)
 
 3. **random**
 
-Returns a random number
+Returns a psuedo-random number
 
 Syntax: `(random <value 1 (optional)> <value 2 (optional)>)`
 
