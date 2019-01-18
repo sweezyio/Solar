@@ -67,7 +67,7 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
 |datetime   |Returns the date and/or time   | Yes |
-|random   |Returns a random number   | Yes |
+|random   |Returns a psuedo-random number   | Yes |
 
 ### Functions In-Depth
 
