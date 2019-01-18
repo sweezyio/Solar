@@ -22,6 +22,12 @@ Before contributing, please make sure you have read [The Contribution Guidelines
 ## What is Solar's file extension
 Solar's file extension is `.solr`.
 
+## How to Use Interpreter
+### Windows
+Clone Repository, and go to `/examples` on your local repository and right-click on any of the example files. If on windows, hover over `Open With...` and select Choose another app and select the `Always use this app to open .solr files`, before pressing `More apps`, Sxroll to the bottom, and press `main.bat` in the main folder of the repository.
+### Mac/Linux
+Clone Repository, and go to `/examples` on your local repository and select the `solar.sh` script as your defalt script to run that program.
+
 ## Docs
 Read the Docs [here](/docs)
 ### SimpleBinary and Dandigit
