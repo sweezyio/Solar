@@ -72,7 +72,7 @@ These reserved names below are neither functions nor variables; rather they are 
 |        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
 |datetime   |Returns the date and/or time   | Yes |
-|random   |Returns a random number   | Yes |
+|random   |Returns a pseudo-random number   | Yes |
 
 
 More coming soon...
