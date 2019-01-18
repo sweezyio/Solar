@@ -263,7 +263,7 @@ class Interpreter:
                 raise SolarError(f"Invalid Argument for function 'random', {args[0]}.")
         else:
             try:
-                return random.randint(self.evaluate(args[0]), self.evaluate(args[1])))
+                return random.randint(self.evaluate(args[0]), self.evaluate(args[1]))
             except:
                 raise SolarError(f"Invalid Arguments for function 'random', {args[0]} and {args[1]}.")
 
