@@ -7,6 +7,7 @@
 from error import SolarError
 import datetime
 import random
+import sys
 
 class SolarLambda:
     def __init__(self, params, body):
@@ -55,7 +56,7 @@ class Interpreter:
             "read": lambda args: self.stdRead(args),
             "readline": lambda args: self.stdReadline(args),
             "readlines": lambda args: self.stdReadlines(args),
-            "write": lambda args: self.stdWrite(args),
+            "argv": lambda args: self.stdArgv(args),
         }]
         self.scopeDepth = 0
         self.lastExpr = None
@@ -565,6 +566,11 @@ class Interpreter:
         except:
             raise SolarError(
                 f"Function 'readlines' Could not read the file: {args[0]}.")
+
+    # Name: 'argv'
+    def stdArgv(self, args):
+        assertArgsLength(args, 0, "argv")
+        return sys.argv
 
     
 
