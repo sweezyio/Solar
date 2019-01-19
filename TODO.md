@@ -4,7 +4,7 @@
  - [x] Make Parser
  - [x] Make Interpreter
  - [ ] Add built in functions to the Interpreter (60%)
- - [ ] Add file handling
+ - [ ] Add file handling (90%)
  - [ ] Add Argsv
  - [ ] Add \n, \t, \n
  - [x] Make Sure It just works out maths and doesn't print unless inside put function
