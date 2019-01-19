@@ -68,6 +68,7 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |read     |Read from an open file.| Yes |
 |readline     |Read a line from an open file.| Yes |
 |readlines     |Returns a list with all the lines in a file| Yes |
+|argv     |Returns a list with all the command-line arguments| Yes |
 |        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
 |datetime   |Returns the date and/or time   | Yes |
