@@ -69,6 +69,10 @@ These reserved names below are neither functions nor variables; rather they are 
 |put     |Print output without new line            | Yes|
 |print    |Print output             | Yes|
 |get     |Read a line of input from stdin| Yes |
+|open     |Open a file| Yes |
+|read     |Read from an open file.| Yes |
+|readline     |Read a line from an open file.| Yes |
+|readlines     |Returns a list with all the lines in a file| Yes |
 |        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
 |datetime   |Returns the date and/or time   | Yes |
