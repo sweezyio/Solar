@@ -51,6 +51,11 @@ class Interpreter:
             "while": lambda args: self.stdWhile(args),
             "datetime": lambda args: self.stdDateTime(args),
             "random": lambda args: self.stdRandom(args),
+            "open": lambda args: self.stdOpen(args),
+            "read": lambda args: self.stdRead(args),
+            "readline": lambda args: self.stdReadline(args),
+            "readlines": lambda args: self.stdReadlines(args),
+            "write": lambda args: self.stdWrite(args),
         }]
         self.scopeDepth = 0
         self.lastExpr = None
@@ -478,6 +483,90 @@ class Interpreter:
             ret = self.callLambda([], body)
         
         return ret
+
+    openLink = ""
+    # Name: 'open'
+    def stdOpen(self, args):
+        global openLink
+        # Must have 1 or 2 args
+        if len(args) > 2 and not len(args) == 0:
+            raise SolarError(
+                f"Function 'open' expected 1 or 2 args, but got {len(args)}.")
+
+        if len(args) == 1:
+            try:
+               return open(self.evaluate(args[0]))
+               openLink = self.evaluate(args[0])
+            except IOError:
+                raise SolarError(
+                    f"Function open could not find file: {args[0]}.")
+            except:
+                pass
+        else:
+            try:
+                return open(self.evaluate(args[0]), self.evaluate(args[1]))
+                openLink = self.evaluate(args[0]) + ", " + self.evaluate(args[1])
+            except IOError:
+                raise SolarError(
+                    f"Function 'open' either could not find file: {args[0]} or there is an invalid 2nd arg: {args[1]}.")
+            except:
+                raise SolarError(
+                    f"Problem: {args[0]} or there is an invalid 2nd arg: {args[1]}.")
+
+
+    # Name: 'read'
+    def stdRead(self, args):
+        # Must have 1 or 2 args
+        if len(args) > 2 and not len(args) == 0:
+            raise SolarError(
+                f"Function 'read' expected 1 or 2 args, but got {len(args)}.")
+
+        if len(args) == 1:
+            try:
+                return self.evaluate(args[0]).read()
+            except:
+                raise SolarError(
+                    f"Function 'read' Could not read the file: {args[0]}.")
+        else:
+            try:
+                return self.evaluate(args[0]).read(self.evaluate(args[1]))
+            except:
+                raise SolarError(
+                    f"Function 'read' Could not read the file: {args[0]}.")
+
+
+    # Name: 'readline'
+    def stdReadline(self, args):
+        # Must have 1 or 2 args
+        if len(args) > 2 and not len(args) == 0:
+            raise SolarError(
+                f"Function 'readline' expected 1 or 2 args, but got {len(args)}.")
+
+        if len(args) == 1:
+            try:
+                return self.evaluate(args[0]).readline()
+            except:
+                raise SolarError(
+                    f"Function 'readline' Could not read the file: {args[0]}.")
+        else:
+            try:
+                return self.evaluate(args[0]).readline(self.evaluate(args[1]))
+            except:
+                raise SolarError(
+                    f"Function 'readline' Could not read the file: {args[0]}.")
+
+        
+    # Name: 'readlines'
+    def stdReadlines(self, args):
+        # Must have 1 or 2 args
+        assertArgsLength(args, 1, "readlines")
+        try:
+            return self.evaluate(args[0]).readlines()
+        except:
+            raise SolarError(
+                f"Function 'readlines' Could not read the file: {args[0]}.")
+
+    
 
   
 # --- End functions in environment --- #
