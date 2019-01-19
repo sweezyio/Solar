@@ -4,8 +4,8 @@
  - [x] Make Parser
  - [x] Make Interpreter
  - [ ] Add built in functions to the Interpreter (60%)
- - [ ] Add file handling (90%)
- - [ ] Add Argsv
+ - [ ] Add file handling (90%) (No writing)
+ - [x] Add Argv
  - [ ] Add \n, \t, \n
  - [x] Make Sure It just works out maths and doesn't print unless inside put function
  - [x] Make it raise an error if the function being called does not exist
