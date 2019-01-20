@@ -8,6 +8,7 @@ from error import SolarError
 import datetime
 import random
 import sys
+import os
 
 class SolarLambda:
     def __init__(self, params, body):
@@ -57,6 +58,7 @@ class Interpreter:
             "readline": lambda args: self.stdReadline(args),
             "readlines": lambda args: self.stdReadlines(args),
             "argv": lambda args: self.stdArgv(args),
+            "cwd": lambda args: self.stdCwd(args),
         }]
         self.scopeDepth = 0
         self.lastExpr = None
@@ -571,6 +573,12 @@ class Interpreter:
     def stdArgv(self, args):
         assertArgsLength(args, 0, "argv")
         return sys.argv
+
+    # Name: 'cwd'
+    def stdCwd(self, args):
+        assertArgsLength(args, 0, "argv")
+        return os.getcwd
+
 
     
 
