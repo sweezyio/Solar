@@ -57,8 +57,10 @@ class Interpreter:
             "read": lambda args: self.stdRead(args),
             "readline": lambda args: self.stdReadline(args),
             "readlines": lambda args: self.stdReadlines(args),
+            "close": lambda args: self.stdClose(args),
             "argv": lambda args: self.stdArgv(args),
             "cwd": lambda args: self.stdCwd(args),
+            "len": lambda args: self.stdLen(args),
         }]
         self.scopeDepth = 0
         self.lastExpr = None
@@ -561,7 +563,6 @@ class Interpreter:
         
     # Name: 'readlines'
     def stdReadlines(self, args):
-        # Must have 1 or 2 args
         assertArgsLength(args, 1, "readlines")
         try:
             return self.evaluate(args[0]).readlines()
@@ -569,15 +570,37 @@ class Interpreter:
             raise SolarError(
                 f"Function 'readlines' Could not read the file: {args[0]}.")
 
+
+    # Name: 'close'
+    def stdClose(self, args):
+        assertArgsLength(args, 1, "close")
+        try:
+            close(self.evaluate(args[0]))
+        except:
+            raise SolarError(
+                f"Function 'close' Could not close the file: {args[0]}.")
+
+
     # Name: 'argv'
     def stdArgv(self, args):
         assertArgsLength(args, 0, "argv")
         return sys.argv
 
+
     # Name: 'cwd'
     def stdCwd(self, args):
         assertArgsLength(args, 0, "argv")
         return os.getcwd
+
+
+    # Name: 'len'
+    def stdLen(self, args):
+        assertArgsLength(args, 1, "argv")
+        try:
+            return len(self.evaluate(args[0]))
+        except:
+            raise SolarError(
+                f"Function 'len' Could not find the length of: {args[0]}.")
 
 
     
