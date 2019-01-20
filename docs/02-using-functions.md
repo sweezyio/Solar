@@ -1,5 +1,5 @@
 
-﻿![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
+![Solar Logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
 
 # Solar Docs - Using Functions
 
@@ -64,10 +64,15 @@ Functions power the whole language in Solar, so knowing how to use functions is 
 |put     |Print output without new line            | Yes|
 |print    |Print output             | Yes|
 |get     |Read a line of input from stdin| Yes |
+|open     |Open a file| Yes |
+|read     |Read from an open file.| Yes |
+|readline     |Read a line from an open file.| Yes |
+|readlines     |Returns a list with all the lines in a file| Yes |
+|argv     |Returns a list with all the command-line arguments| Yes |
 |        |**Other**               |    |
 |raise   |Raise a SolarError   | Yes |
 |datetime   |Returns the date and/or time   | Yes |
-|random   |Returns a psuedo-random number   | Yes |
+|random   |Returns a pseudo-random number   | Yes |
 
 ### Functions In-Depth
 
@@ -565,6 +570,130 @@ Output:
 
 ```
 Good Luck
+```
+
+5. **open**
+
+Opens a file.
+
+Syntax: `(open <value 1> <value 2 (optional)>)`
+
+Example:
+
+```
+(def x (open "1.txt"))
+(print (read x))
+```
+
+Output:
+
+```
+This is a random
+File...
+
+This is the last line.
+```
+
+6. **read**
+
+Reads an Open file.
+
+Syntax: `(read <value 1> <value 2 (optional)>)`
+
+Example:
+
+```
+(def x (open "1.txt"))
+(print (read x))
+(print "")
+(print (read x 5))
+(print (read x 6))
+(print (read x 7))
+```
+
+Output:
+
+```
+This is a random
+File...
+
+This is the last line.
+
+This 
+This i
+This is
+```
+
+7. **readline**
+
+Reads a single line of an Open file.
+
+Syntax: `(readline <value 1> <value 2 (optional)>)`
+
+Example:
+
+```
+(def x (open "1.txt"))
+(print (readline x))
+(print 0)
+(print (readline x))
+(print 0)
+(print (readline x))
+(print 0)
+(print (readline x 7))
+(print 0)
+```
+
+Output:
+
+```
+This is a random
+0
+File...
+0
+
+0
+This is
+0
+```
+
+7. **readlines**
+
+Returns a list with all the lines of an open file.
+
+Syntax: `(readlines <value 1>)`
+
+Example:
+
+```
+(def x (open "1.txt"))
+(print (readlines x))
+(print (index (readlines x) 0))
+```
+
+Output:
+
+```
+["This is a random", "File...", "\n", "This is the last line."]
+This is a random
+```
+
+8. **argv**
+
+Returns a list with the Command-line arguments.
+
+Syntax: `(argsv)`
+
+Example:
+
+```
+(print (argv))
+```
+
+Output:
+
+```
+["/path/to/file/main.py", "/path/to/file/that/is/going/to/be/run.solr"]
 ```
 
 #### Control-Flow Functions
