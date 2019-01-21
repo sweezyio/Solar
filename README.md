@@ -31,7 +31,7 @@ Clone Repository, and go to `/examples` on your local repository and select the 
 
 ## Docs
 Read the Docs [here](/docs)
-### SimpleBinary and Dandigit
+- SimpleBinary and Dandigit
     - Owners of this orginisation
 
    
