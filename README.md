@@ -1,3 +1,5 @@
+# THIS IS NOT MINE! I FORKED THE REPO BEFORE IT WAS DELETED!
+
 ![Solar-logo](https://github.com/Solar-language/Solar/blob/master/media/solar-logo.png?raw=true)
 # Solar
 ###### V1.3.0
